@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Diagnostics;
 using System.ComponentModel;
+using System;
 
 namespace HoldItCore {
 
@@ -24,6 +25,8 @@ namespace HoldItCore {
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
 		}
+
+		public event EventHandler Completed;
 
 		public override void OnApplyTemplate() {
 			base.OnApplyTemplate();
@@ -53,6 +56,10 @@ namespace HoldItCore {
 				this.State = LevelState.Playing;
 				this.Start();
 			}
+			else if (e.NewState.Name == LevelState.Completed.ToString()) {
+				if (this.Completed != null)
+					this.Completed(this, EventArgs.Empty);
+			}
 		}
 
 		protected void AddPerson(Person person) {
@@ -65,7 +72,8 @@ namespace HoldItCore {
 			this.UpdateWaitingLine();
 		}
 
-		protected void Completed() {
+		protected virtual void OnCompleted() {
+			this.State = LevelState.Completed;
 		}
 
 		public void RemoveFromLine(Person person) {

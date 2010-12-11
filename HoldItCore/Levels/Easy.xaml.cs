@@ -64,7 +64,7 @@ namespace HoldItCore.Levels {
 			Debug.Assert(this.inFlightCount >= 0);
 
 			if (this.toBeSpawnedCount == 0 && this.inFlightCount == 0) {
-				this.Completed();
+				this.OnCompleted();
 			}
 		}
 
