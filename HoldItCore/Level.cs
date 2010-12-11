@@ -1,14 +1,15 @@
 ﻿using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows;
+using System.Diagnostics;
 
 namespace HoldItCore {
 	public class Level : ContentControl {
 
 		private List<Stall> stalls = new List<Stall>();
 
-		private List<Person> persons = new List<Person>();
-		private Queue<Person> waitingLine = new Queue<Person>();
+		//private List<Person> persons = new List<Person>();
+		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
 
@@ -44,10 +45,16 @@ namespace HoldItCore {
 			this.peopleCanvas.Children.Add(person);
 
 			//this.persons.Add(person);
-			this.waitingLine.Enqueue(person);
+			this.waitingLine.Add(person);
 			
 
 			this.UpdateWaitingLine();
+		}
+
+		public void RemoveFromLine(Person person) {
+			Debug.Assert(this.waitingLine.Contains(person));
+
+			this.waitingLine.Remove(person);
 		}
 
 		public void RemovePerson(Person person) {
@@ -64,7 +71,8 @@ namespace HoldItCore {
 
 		public void SendPersonTo(Stall stall) {
 			if (this.waitingLine.Count > 0) {
-				Person first = this.waitingLine.Dequeue();
+				Person first = this.waitingLine[0];
+
 				first.GoToStall(stall);
 
 				this.UpdateWaitingLine();
