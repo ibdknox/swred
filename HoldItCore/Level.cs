@@ -70,10 +70,10 @@ namespace HoldItCore {
 		}
 
 		public void SendPersonTo(Stall stall) {
-			if (this.waitingLine.Count > 0) {
-				Person first = this.waitingLine[0];
+			if (this.selection != null) {
 
-				first.GoToStall(stall);
+				this.selection.GoToStall(stall);
+				this.Deselect(this.selection);
 
 				this.UpdateWaitingLine();
 			}
@@ -83,6 +83,22 @@ namespace HoldItCore {
 		}
 
 		protected virtual void Stop() {
+		}
+
+		private Person selection = null;
+		public void Select(Person person) {
+			if (this.selection != null)
+				this.selection.IsSelected = false;
+
+			this.selection = person;
+			if (this.selection != null)
+				this.selection.IsSelected = true;
+		}
+
+		public void Deselect(Person person) {
+			person.IsSelected = false;
+			if (this.selection == person)
+				this.selection = null;
 		}
 	}
 }

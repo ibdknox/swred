@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace HoldItCore {
 
@@ -45,7 +46,10 @@ namespace HoldItCore {
 
 			//this.peeScaleTransform = (ScaleTransform)this.GetTemplateChild("PeeScaleTransform");
 			((FrameworkElement)this.GetTemplateChild("PeeProgress")).RenderTransform = this.peeScaleTransform;
-			this.StartBladderFilling();
+
+			// Stop the animations at design-time.
+			if (!DesignerProperties.IsInDesignTool)
+				this.StartBladderFilling();
 		}
 
 		public Level Level { get; set; }
@@ -125,6 +129,10 @@ namespace HoldItCore {
 				if (this.Level != null)
 					this.Level.RemoveFromLine(this);
 			}
+
+			if (this.IsSelected)
+				this.Level.Deselect(this);
+
 			Storyboard exitingAnimation = this.AnimateTo(this.exitPoint);
 			exitingAnimation.Completed += this.HandleExitCompleted;
 		}
@@ -159,7 +167,6 @@ namespace HoldItCore {
 
 			return sb;
 		}
-
 		
 
 		protected virtual void OnEnteredStall() {
@@ -221,5 +228,30 @@ namespace HoldItCore {
 
 			return sb;
 		}
+
+		protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) {
+			base.OnMouseLeftButtonDown(e);
+
+			this.Level.Select(this);
+		}
+
+		public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(Person), new PropertyMetadata(default(bool), Person.HandleIsSelectedChanged));
+		public bool IsSelected {
+			get { return (bool)this.GetValue(Person.IsSelectedProperty); }
+			set { this.SetValue(Person.IsSelectedProperty, value); }
+		}
+
+		private static void HandleIsSelectedChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
+			((Person)sender).OnIsSelectedChanged(e);
+		}
+
+		protected virtual void OnIsSelectedChanged(DependencyPropertyChangedEventArgs e) {
+			if (this.IsSelected)
+				VisualStateManager.GoToState(this, "Selected", true);
+			else
+				VisualStateManager.GoToState(this, "Deselected", true);
+		}
+
+		
 	}
 }

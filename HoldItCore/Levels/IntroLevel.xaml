@@ -11,39 +11,11 @@
     d:DesignHeight="480" d:DesignWidth="800">
 	<local:Level.Resources>
 
-		<Style x:Key="DefaultUrinal" TargetType="local:Urinal">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="local:Urinal">
-						<Grid>
-							<Border BorderBrush="#FF787878" BorderThickness="20" CornerRadius="20" Margin="0,34,0,0" Background="#FFD2D2D2"/>
-							<Border BorderBrush="#FF787878" BorderThickness="20" Width="40" Height="40" VerticalAlignment="Top"/>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style x:Key="DefaultPerson" TargetType="local:Person">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="local:Person">
-						<Grid>
-							<Grid Margin="38,0,37,0" Opacity="0.5">
-								<Border BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
-								<Ellipse Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
-							</Grid>
-							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
-								<Rectangle Fill="#4CFFF500" Stroke="Black"/>
-								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5">
-								</Rectangle>
-								<Rectangle Stroke="Black"/>
-							</Grid>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+
+
 		<Style x:Key="PersonStyle1" TargetType="local:Person">
+			<Setter Property="Height" Value="185"/>
+			<Setter Property="Width" Value="125"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="local:Person">
@@ -56,14 +28,23 @@
 									<VisualState x:Name="Waiting"/>
 									<VisualState x:Name="PeedPants">
 										<Storyboard>
-											<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Deselected"/>
+									<VisualState x:Name="Selected">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FFFF7839" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse1" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="#FFFFA47A" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border" d:IsOptimized="True"/>
 										</Storyboard>
 									</VisualState>
 								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
 							<Grid Margin="38,0,37,0" Opacity="0.5">
-								<Border BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
-								<Ellipse Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
+								<Border x:Name="border" BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
+								<Ellipse x:Name="ellipse1" Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
 							</Grid>
 							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
 								<Rectangle Fill="#4CFFF500" Stroke="Black"/>
@@ -77,11 +58,13 @@
 			</Setter>
 		</Style>
 
+
+
 	</local:Level.Resources>
     
     <Canvas x:Name="LayoutRoot" Background="White">
     	<Canvas x:Name="Urinals" Height="170" Canvas.Left="35" Canvas.Top="122" Width="641">
-    		<local:Urinal Height="170" Style="{StaticResource DefaultUrinal}" />
+    		<local:Urinal Height="170" />
     		<local:Urinal Height="170" Canvas.Left="387" />
     		<local:Urinal Height="170" Width="125" Canvas.Left="258" />
     		<local:Urinal Height="170" Canvas.Left="129" />
