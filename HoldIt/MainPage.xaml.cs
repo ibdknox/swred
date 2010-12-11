@@ -25,6 +25,7 @@ namespace HoldIt
         }
 
 		private void Start(object sender, EventArgs e) {
+			this.NavigationService.Navigate(new Uri("/Levels.xaml", UriKind.Relative));
 		}
     }
 }
