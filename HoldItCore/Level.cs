@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace HoldItCore {
+
+	public enum LevelState {
+		Intro,
+		Playing,
+		Completed,
+		Failed,
+	}
+
 	public class Level : ContentControl {
 
 		private List<Stall> stalls = new List<Stall>();
 
-		//private List<Person> persons = new List<Person>();
 		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
@@ -33,22 +41,31 @@ namespace HoldItCore {
 
 			this.peopleCanvas = (Panel)content.FindName("People");
 
-			//FrameworkElement lineStartElement = content.FindName("LineStart") as FrameworkElement;
+			if (!DesignerProperties.IsInDesignTool)
+				this.State = LevelState.Intro;
 
-			//Point lineStart = lineStartElement.TransformToVisual(this.peopleCanvas).Transform(new Point(0,0));
+			VisualStateGroup playStates = (VisualStateGroup)this.GetTemplateChild("PlayStates");
+			playStates.CurrentStateChanged += this.HandleCurrentStateChanged;
+		}
 
-			this.Start();
+		private void HandleCurrentStateChanged(object sender, VisualStateChangedEventArgs e) {
+			if (e.NewState.Name == LevelState.Intro.ToString()) {
+				this.State = LevelState.Playing;
+				this.Start();
+			}
 		}
 
 		protected void AddPerson(Person person) {
 			person.Level = this;
 			this.peopleCanvas.Children.Add(person);
 
-			//this.persons.Add(person);
 			this.waitingLine.Add(person);
 			
 
 			this.UpdateWaitingLine();
+		}
+
+		protected void Completed() {
 		}
 
 		public void RemoveFromLine(Person person) {
@@ -58,7 +75,12 @@ namespace HoldItCore {
 		}
 
 		public void RemovePerson(Person person) {
+			this.OnPersonRemoved(person);
 			this.peopleCanvas.Children.Remove(person);
+			
+		}
+
+		protected virtual void OnPersonRemoved(Person person) {
 		}
 
 		private void UpdateWaitingLine() {
@@ -99,6 +121,15 @@ namespace HoldItCore {
 			person.IsSelected = false;
 			if (this.selection == person)
 				this.selection = null;
+		}
+
+		private LevelState state;
+		public LevelState State {
+			get { return this.state; }
+			set {
+				this.state = value;
+				VisualStateManager.GoToState(this, this.State.ToString(), true);
+			}
 		}
 	}
 }

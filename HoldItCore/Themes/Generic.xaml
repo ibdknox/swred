@@ -8,16 +8,94 @@
 
 
     <Style TargetType="local:Level">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:Level">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="local:Level">
 					<Grid>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="PlayStates">
+								<VisualStateGroup.Transitions>
+									<VisualTransition GeneratedDuration="0" To="Intro">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IntroText">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+											</DoubleAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="IntroText">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame KeyTime="0:0:1">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualTransition>
+									<VisualTransition GeneratedDuration="0" To="Lost">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="LostText">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame KeyTime="0:0:1">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LostText">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualTransition>
+									<VisualTransition GeneratedDuration="0" To="Completed">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CompletedText">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame KeyTime="0:0:1">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CompletedText">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualTransition>
+								</VisualStateGroup.Transitions>
+								<VisualState x:Name="Intro"/>
+								<VisualState x:Name="Playing"/>
+								<VisualState x:Name="Lost"/>
+								<VisualState x:Name="Completed"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
 						<ContentPresenter/>
+						<Grid>
+							<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+							<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+							<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+						</Grid>
 					</Grid>
 				</ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
     <Style TargetType="local:Urinal">
 		<Setter Property="Height" Value="170"/>
