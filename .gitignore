@@ -1,2 +1,7 @@
 Bin
 obj
+*.dll
+*.suo
+*.xap
+*.pdb
+*.user

@@ -11,20 +11,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 
-namespace HoldIt
-{
-    public partial class MainPage : PhoneApplicationPage
-    {
-        // Constructor
-        public MainPage()
-        {
-            InitializeComponent();
-
-
-			this.PlayButton.Click += this.Start;
-        }
-
-		private void Start(object sender, EventArgs e) {
+namespace HoldIt {
+	public partial class Levels : PhoneApplicationPage {
+		public Levels() {
+			InitializeComponent();
 		}
-    }
+	}
 }
