@@ -100,7 +100,12 @@
                                 <TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="false" Margin="0,20,15,0">
+						<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False" Margin="10, 20, 10, 0">
+							<TextBlock Text="Remaining: " FontSize="32" />
+							<TextBlock x:Name="Remaining" Text="{Binding Remaining}" FontSize="32" />
+						</StackPanel>
+
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="false" Margin="0,20,15,0">
                             <TextBlock Text="Accidents: " FontSize="32"/>
                             <TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
                         </StackPanel>

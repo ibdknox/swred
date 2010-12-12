@@ -27,7 +27,7 @@ namespace HoldItCore.Levels {
 			this.AddPerson(new Person());
 		}
 
-		protected override void Stop() {
+		public override void Stop() {
 			base.Stop();
 
 			this.timer.Stop();

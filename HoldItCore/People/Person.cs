@@ -169,7 +169,7 @@ namespace HoldItCore.People {
 		private double MaxPeeAmount { get; set; }
 
 		protected void StartPeeing() {
-            var stopSound = SoundManager.Play(SoundIndex.peeing, false);
+            var stopSound = SoundManager.Play(SoundIndex.peeing, SettingsStore.EffectsVolume, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
 			this.bladderFillAnimation.Stop();

@@ -27,20 +27,20 @@ namespace HoldItCore.Sounds
             _player = player;
         }
 
-        public static int Play(string curSound, bool loop)
+        public static int Play(string curSound, int volume, bool loop)
         {
             if (_player == null)
 				return -1;
 
 			counter++;
-			stops[counter] = _player.Play(curSound, loop);
+			stops[counter] = _player.Play(curSound, volume, loop);
 
 			return counter;
         }
 
 		public static void Stop(int index)
 		{
-			if (index < 0)
+			if (index < 0 || !stops.ContainsKey(index))
 				return;
 
 			stops[index]();

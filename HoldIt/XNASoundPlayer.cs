@@ -29,13 +29,14 @@ namespace HoldIt
             _sounds = new Dictionary<string, SoundEffectInstance>();
         }
 
-        public Action Play(string curSound, bool loop)
+        public Action Play(string curSound, int volume, bool loop)
         {
             Stream sound = typeof(SoundManager).Assembly.GetManifestResourceStream("HoldItCore.Sounds." + curSound);
             SoundEffect effect = SoundEffect.FromStream(sound);
             SoundEffectInstance soundInstance = effect.CreateInstance();
             FrameworkDispatcher.Update();
             soundInstance.IsLooped = loop;
+			soundInstance.Volume = volume / 100.0f;
             soundInstance.Play();
 
 			return () => {

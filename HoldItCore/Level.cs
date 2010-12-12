@@ -4,6 +4,7 @@ using System.Windows;
 using System.Diagnostics;
 using System.ComponentModel;
 using System;
+using System.Linq;
 using HoldItCore.People;
 using System.Net;
 using HoldItCore.Sounds;
@@ -30,12 +31,14 @@ namespace HoldItCore {
 		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
+
+		public int CurrentPeopleInFlight { get; private set; }
 		
 
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
 			this.DataContext = this;
-			SoundManager.Play(SoundIndex.background, true);
+			SoundManager.Play(SoundIndex.background, SettingsStore.MusicVolume, true);
 		}
 
 		public event EventHandler Completed;
@@ -78,11 +81,17 @@ namespace HoldItCore {
 		}
 
 		protected void AddPerson(Person person) {
+			if (this.Remaining == 0)
+				return;
+
 			person.Level = this;
+
+			this.CurrentPeopleInFlight++;
+			this.Remaining--;
+
 			this.peopleCanvas.Children.Add(person);
 
 			this.waitingLine.Add(person);
-			
 
 			this.UpdateWaitingLine();
 		}
@@ -101,7 +110,14 @@ namespace HoldItCore {
 		public void RemovePerson(Person person) {
 			this.OnPersonRemoved(person);
 			this.peopleCanvas.Children.Remove(person);
-			
+
+			this.CurrentPeopleInFlight--;
+
+			if (this.CurrentPeopleInFlight == 0 || this.Remaining == 0)
+			{
+				// Level is finished!
+				this.OnCompleted();
+			}
 		}
 
 		protected virtual void OnPersonRemoved(Person person) {
@@ -159,7 +175,7 @@ namespace HoldItCore {
 		protected virtual void Start() {
 		}
 
-		protected virtual void Stop() {
+		public virtual void Stop() {
 			SoundManager.StopAll();
 		}
 
@@ -203,6 +219,13 @@ namespace HoldItCore {
 			set { this.SetValue(Level.AccidentsProperty, value); }
 		}
 
+		public static readonly DependencyProperty RemainingProperty = DependencyProperty.Register("Remaining", typeof(int), typeof(Level), new PropertyMetadata(default(int)));
+		public int Remaining
+		{
+			get { return (int)this.GetValue(Level.RemainingProperty); }
+			set { this.SetValue(Level.RemainingProperty, value); }
+		}
+
 		private LevelState state;
 		public LevelState State {
 			get { return this.state; }
@@ -211,9 +234,6 @@ namespace HoldItCore {
 				VisualStateManager.GoToState(this, this.State.ToString(), true);
 			}
 		}
-
-
-
 
 		public static readonly DependencyProperty ScoreIncrementProperty = DependencyProperty.Register("ScoreIncrement", typeof(double), typeof(Level), new PropertyMetadata(default(double)));
 		public double ScoreIncrement {
