@@ -164,6 +164,17 @@
     <Resource Include="People\Old Man Front Glow.png" />
     <Resource Include="People\Phone Guy Front Glow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Drunk behind No BG.png" />
+    <Resource Include="People\Drunk Front No BG.png" />
+    <Resource Include="People\Kid behind No BG.png" />
+    <Resource Include="People\Kid Front Glow.png" />
+    <Resource Include="People\Kid Front No BG.png" />
+    <Resource Include="People\matre d behind No BG.png" />
+    <Resource Include="People\matre d No BG.png" />
+    <Resource Include="People\Phone Guy Behind No BG.png" />
+    <Resource Include="People\Phone Guy No BG.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
