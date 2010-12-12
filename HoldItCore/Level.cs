@@ -154,7 +154,7 @@ namespace HoldItCore {
 		protected virtual void Start() {
 		}
 
-		protected virtual void Stop() {
+		public virtual void Stop() {
 		}
 
 		private Person selection = null;

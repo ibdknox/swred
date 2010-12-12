@@ -55,19 +55,24 @@ namespace HoldIt
             this.MyScoreList.SelectionChanged += (sender, args) =>
                 {
                     int index = this.MyScoreList.SelectedIndex;
+					if (index >= 0 && index < this.MyScoreData.Count) {
 
-                    string level = this.MyScoreData[index].Score.Level;
-                    this.NavigationService.Navigate(new Uri("/HighScoreList.xaml?level=" + level, UriKind.Relative));
+						string level = this.MyScoreData[index].Score.Level;
+						this.NavigationService.Navigate(new Uri("/HighScoreList.xaml?level=" + level, UriKind.Relative));
+					}
                 };
 
             this.HighScoreList.SelectionChanged += (sender, args) =>
             {
                 int index = this.HighScoreList.SelectedIndex;
 
-                string level = this.HighScoreData[index].Score.Level;
-                // Navigate to page for level
-                this.NavigationService.Navigate(new Uri("/HighScoreList.xaml?level=" + level, UriKind.Relative));
-                };
+				if (index >= 0 && index < this.MyScoreData.Count) {
+
+					string level = this.HighScoreData[index].Score.Level;
+					// Navigate to page for level
+					this.NavigationService.Navigate(new Uri("/HighScoreList.xaml?level=" + level, UriKind.Relative));
+				}
+            };
 		}
 
 
