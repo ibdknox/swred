@@ -55,6 +55,8 @@ namespace HoldItCore.People {
 
 			VisualStateGroup textStates = (VisualStateGroup)this.GetTemplateChild("TextStates");
 			textStates.CurrentStateChanged += this.HandleTextStatesChanged;
+
+			VisualStateManager.GoToState(this, "Forwards", true);
 		}
 
 		public Level Level { get; set; }
@@ -122,6 +124,8 @@ namespace HoldItCore.People {
 			this.Level.RemoveFromLine(this);
 
 			sb.Completed += this.HandleGoToStallAnimationCompleted;
+
+			VisualStateManager.GoToState(this, "Backwards", true);
 		}
 
 		private void HandleGoToStallAnimationCompleted(object sender, EventArgs e) {
@@ -158,6 +162,8 @@ namespace HoldItCore.People {
 
 			Storyboard exitingAnimation = this.AnimateTo(this.exitPoint);
 			exitingAnimation.Completed += this.HandleExitCompleted;
+
+			VisualStateManager.GoToState(this, "Forwards", true);
 		}
 
 		private double MaxPeeAmount { get; set; }
@@ -237,6 +243,8 @@ namespace HoldItCore.People {
 			foreach (Stall stall in this.stall.Neighbors)
 				if (stall.Person != null)
 					stall.Person.OnNeighborLeftStall();
+
+			VisualStateManager.GoToState(this, "Forwards", true);
 		}
 
 		private void HandleExitCompleted(object sender, EventArgs e) {
@@ -309,8 +317,6 @@ namespace HoldItCore.People {
 				VisualStateManager.GoToState(this, "Deselected", true);
 		}
 
-
-
 		public static readonly DependencyProperty SpeechTextProperty = DependencyProperty.Register("SpeechText", typeof(string), typeof(Person), new PropertyMetadata(default(string), Person.HandleSpeechTextChanged));
 		public string SpeechText {
 			get { return (string)this.GetValue(Person.SpeechTextProperty); }
@@ -330,13 +336,31 @@ namespace HoldItCore.People {
 				VisualStateManager.GoToState(this, "Hidden", true);
 		}
 
-
-
 		public static readonly DependencyProperty PeeMeterSizeProperty = DependencyProperty.Register("PeeMeterSize", typeof(double), typeof(Person), new PropertyMetadata(50d));
 		public double PeeMeterSize {
 			get { return (double)this.GetValue(Person.PeeMeterSizeProperty); }
 			set { this.SetValue(Person.PeeMeterSizeProperty, value); }
 		}
+
+		public static readonly DependencyProperty FrontImageProperty = DependencyProperty.Register("FrontImage", typeof(ImageSource), typeof(Person), new PropertyMetadata(default(ImageSource)));
+		public ImageSource FrontImage {
+			get { return (ImageSource)this.GetValue(Person.FrontImageProperty); }
+			set { this.SetValue(Person.FrontImageProperty, value); }
+		}
+
+		public static readonly DependencyProperty BackImageProperty = DependencyProperty.Register("BackImage", typeof(ImageSource), typeof(Person), new PropertyMetadata(default(ImageSource)));
+		public ImageSource BackImage {
+			get { return (ImageSource)this.GetValue(Person.BackImageProperty); }
+			set { this.SetValue(Person.BackImageProperty, value); }
+		}
+
+		public static readonly DependencyProperty SelectedImageProperty = DependencyProperty.Register("SelectedImage", typeof(ImageSource), typeof(Person), new PropertyMetadata(default(ImageSource)));
+		public ImageSource SelectedImage {
+			get { return (ImageSource)this.GetValue(Person.SelectedImageProperty); }
+			set { this.SetValue(Person.SelectedImageProperty, value); }
+		}
+
+		
 
 		
 	}
