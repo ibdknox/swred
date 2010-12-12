@@ -23,6 +23,8 @@ namespace HoldIt
             SoundManager.InitSoundSource(new XNASoundPlayer());
 
 			this.PlayButton.Click += this.Start;
+
+			this.Scores.Click += (sender, args) => this.NavigationService.Navigate(new Uri("/ScoreList.xaml", UriKind.Relative));
         }
 
 		private void Start(object sender, EventArgs e) {
