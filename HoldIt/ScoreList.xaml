@@ -19,11 +19,11 @@
 		<controls:Panorama Title="Scores">
 
 			<controls:PanoramaItem Header="My Scores">
-				<StackPanel Orientation="Vertical" x:Name="MyScoreList" />
+                <ListBox x:Name="MyScoreList" />
 			</controls:PanoramaItem>
 
 			<controls:PanoramaItem Header="High Scores">
-				<StackPanel Orientation="Vertical" x:Name="HighScoreList" />
+				<ListBox x:Name="HighScoreList" />
 			</controls:PanoramaItem>
 		</controls:Panorama>
 	</Grid>
