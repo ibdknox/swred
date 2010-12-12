@@ -50,6 +50,10 @@ namespace HoldIt
 		private void HandleShowSettings(object sender, EventArgs e) {
 			this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
 		}
+        private void HandleShowHelp(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Help.xaml", UriKind.Relative));
+        }
 
 		private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e) {
 			if (e.AddedItems.Count == 1) {
