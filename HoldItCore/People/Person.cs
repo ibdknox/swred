@@ -8,7 +8,7 @@ using System;
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace HoldItCore {
+namespace HoldItCore.People {
 
 	public enum PersonState {
 		Unset,
@@ -35,10 +35,12 @@ namespace HoldItCore {
 
 			this.RenderTransform = translation;
 
-			this.InitialBladderFill = .2;
-			this.BladderFillRate = .1;
-			this.PeeRate = .2;
+			this.InitialBladderFill = .2 + Utils.RNG.NextDouble() * .2;
+			this.BladderFillRate = .1 + Utils.RNG.NextDouble() * .1;
+			this.PeeRate = .05 + Utils.RNG.NextDouble() * .1;
 			this.State = PersonState.Unset;
+
+			this.WalkSpeed = 400;
 		}
 
 		public override void OnApplyTemplate() {
@@ -50,6 +52,9 @@ namespace HoldItCore {
 			// Stop the animations at design-time.
 			if (!DesignerProperties.IsInDesignTool)
 				this.StartBladderFilling();
+
+			VisualStateGroup textStates = (VisualStateGroup)this.GetTemplateChild("TextStates");
+			textStates.CurrentStateChanged += this.HandleTextStatesChanged;
 		}
 
 		public Level Level { get; set; }
@@ -74,6 +79,12 @@ namespace HoldItCore {
 		/// </summary>
 		public double PeeRate { get; set; }
 
+
+		/// <summary>
+		/// Speed that the person walks.
+		/// </summary>
+		public double WalkSpeed { get; set; }
+
 		/// <summary>
 		/// For debugging.
 		/// </summary>
@@ -86,7 +97,7 @@ namespace HoldItCore {
 				this.AnimateTo(position);
 			else {
 				this.MoveTo(this.enterPoint);
-				this.AnimateTo(position, 400);
+				this.AnimateTo(position, this.WalkSpeed);
 
 				this.State = PersonState.InLine;
 			}
@@ -182,6 +193,8 @@ namespace HoldItCore {
 		protected virtual void OnEnteredStall() {
 			this.State = PersonState.InStall;
 
+			this.SpeechText = "Aaahhh!!!";
+
 			this.stall.PersonEntered();
 			this.StartPeeing();
 		}
@@ -205,7 +218,7 @@ namespace HoldItCore {
 		}
 
 		private Storyboard AnimateTo(Point point) {
-			return this.AnimateTo(point, 400);
+			return this.AnimateTo(point, this.WalkSpeed);
 		}
 
 		private Storyboard AnimateTo(Point point, double rate) {
@@ -263,6 +276,25 @@ namespace HoldItCore {
 				VisualStateManager.GoToState(this, "Deselected", true);
 		}
 
-		
+
+
+		public static readonly DependencyProperty SpeechTextProperty = DependencyProperty.Register("SpeechText", typeof(string), typeof(Person), new PropertyMetadata(default(string), Person.HandleSpeechTextChanged));
+		public string SpeechText {
+			get { return (string)this.GetValue(Person.SpeechTextProperty); }
+			set { this.SetValue(Person.SpeechTextProperty, value); }
+		}
+
+		private static void HandleSpeechTextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
+			((Person)sender).OnSpeechTextChanged(e);
+		}
+
+		protected virtual void OnSpeechTextChanged(DependencyPropertyChangedEventArgs e) {
+			VisualStateManager.GoToState(this, "Visible", true);
+		}
+
+		private void HandleTextStatesChanged(object sender, VisualStateChangedEventArgs e) {
+			if (e.NewState.Name == "Visible")
+				VisualStateManager.GoToState(this, "Hidden", true);
+		}
 	}
 }

@@ -11,51 +11,6 @@
     d:DesignHeight="480" d:DesignWidth="800">
 	<local:Level.Resources>
 
-		<Style x:Key="PersonStyle1" TargetType="local:Person">
-			<Setter Property="Height" Value="185"/>
-			<Setter Property="Width" Value="125"/>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="local:Person">
-						<Grid>
-							<VisualStateManager.VisualStateGroups>
-								<VisualStateGroup x:Name="PeeStates">
-									<VisualStateGroup.Transitions>
-										<VisualTransition GeneratedDuration="0:0:1" To="PeedPants"/>
-									</VisualStateGroup.Transitions>
-									<VisualState x:Name="Waiting"/>
-									<VisualState x:Name="PeedPants">
-										<Storyboard>
-											<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
-										</Storyboard>
-									</VisualState>
-								</VisualStateGroup>
-								<VisualStateGroup x:Name="SelectionStates">
-									<VisualState x:Name="Deselected"/>
-									<VisualState x:Name="Selected">
-										<Storyboard>
-											<ColorAnimation Duration="0" To="#FFFF7839" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse1" d:IsOptimized="True"/>
-											<ColorAnimation Duration="0" To="#FFFFA47A" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border" d:IsOptimized="True"/>
-										</Storyboard>
-									</VisualState>
-								</VisualStateGroup>
-							</VisualStateManager.VisualStateGroups>
-							<Grid Margin="38,0,37,0" Opacity="0.5">
-								<Border x:Name="border" BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
-								<Ellipse x:Name="ellipse1" Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
-							</Grid>
-							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
-								<Rectangle Fill="#4CFFF500" Stroke="Black"/>
-								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
-								<Rectangle Stroke="Black"/>
-							</Grid>
-							<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50"/>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-
 
 
 	</local:Level.Resources>

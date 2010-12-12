@@ -4,7 +4,8 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-		xmlns:local="clr-namespace:HoldItCore">
+	xmlns:local="clr-namespace:HoldItCore"
+	xmlns:peeps="clr-namespace:HoldItCore.People">
 
 
 		<Style TargetType="local:Level">
@@ -122,13 +123,14 @@
 		</Setter>
 	</Style>
 
-		<Style TargetType="local:Person">
-		<Setter Property="Height" Value="185"/>
+	<Style x:Key="PersonBase" TargetType="peeps:Person">
+		<Setter Property="Height" Value="152"/>
 		<Setter Property="Width" Value="125"/>
-				<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="local:Person">
-						<Grid>
+		<Setter Property="Background" Value="#FF85BFFF"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="peeps:Person">
+					<Grid>
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="PeeStates">
 									<VisualStateGroup.Transitions>
@@ -150,33 +152,91 @@
 										</Storyboard>
 									</VisualState>
 								</VisualStateGroup>
+								<VisualStateGroup x:Name="TextStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0" To="Visible">
+											<Storyboard>
+												<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="speechBubble">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+													<DiscreteObjectKeyFrame KeyTime="0:0:1">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Collapsed</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="speechBubble">
+													<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Visible"/>
+									<VisualState x:Name="Hidden"/>
+								</VisualStateGroup>
 							</VisualStateManager.VisualStateGroups>
 							<Grid Margin="38,0,37,0" Opacity="0.5">
-								<Border x:Name="border" BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
-								<Ellipse x:Name="ellipse1" Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
+								<Border x:Name="border" BorderThickness="1" Background="{TemplateBinding Background}" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
+								<Ellipse x:Name="ellipse1" Fill="{TemplateBinding Background}" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
 							</Grid>
 							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
-								<Rectangle Fill="#4CFFF500" Stroke="Black"/>
+								<Rectangle Fill="#F4454545" Stroke="Black"/>
 								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
 								<Rectangle Stroke="Black"/>
 							</Grid>
 							<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50"/>
+							<Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+								<Grid Height="200" Canvas.Top="-200" Width="150" Canvas.Left="49">
+									<local:SpeechBubble x:Name="speechBubble" Content="{TemplateBinding SpeechText}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="24" Visibility="Collapsed"/>
+								</Grid>
+							</Canvas>
 						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
-		<Style TargetType="local:Stall">
-				<Setter Property="Template">
-						<Setter.Value>
-								<ControlTemplate TargetType="local:Stall">
-										<Border Background="{TemplateBinding Background}"
-														BorderBrush="{TemplateBinding BorderBrush}"
-														BorderThickness="{TemplateBinding BorderThickness}">
-										</Border>
-								</ControlTemplate>
-						</Setter.Value>
-				</Setter>
-		</Style>
+	<Style TargetType="peeps:Person" BasedOn="{StaticResource PersonBase}">
+    </Style>
+
+	<Style TargetType="peeps:OldMan" BasedOn="{StaticResource PersonBase}">
+		<Setter Property="Background" Value="#FFB4B4B4"/>
+	</Style>
+
+	<Style TargetType="local:Stall">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Stall">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:SpeechBubble">
+    	<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="local:SpeechBubble">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition Height="20"/>
+						</Grid.RowDefinitions>
+						<Rectangle Fill="#FFF4F4F5" Stroke="Black" RadiusX="13" RadiusY="13" Margin="0,0,0,-1.347"/>
+						<Path Data="M14,79 L12,98 L30.809013,78.995705" Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="11.5,-0.5,0,0" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="19.809" Grid.Row="1"/>
+						<TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" Margin="7,5"/>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Width" Value="150"/>
+    </Style>
 </ResourceDictionary>

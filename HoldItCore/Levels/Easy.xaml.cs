@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Diagnostics;
+using HoldItCore.People;
 
 namespace HoldItCore.Levels {
 	public partial class Easy : Level {

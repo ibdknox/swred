@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿
+
 using System.Windows.Threading;
+using System;
+using HoldItCore.People;
 
 namespace HoldItCore.Levels {
 	public partial class IntroLevel : Level {
@@ -17,6 +10,8 @@ namespace HoldItCore.Levels {
 		DispatcherTimer timer = new DispatcherTimer() {
 			Interval = TimeSpan.FromSeconds(3),
 		};
+
+		private Random rng = new Random();
 
 		public IntroLevel() {
 			InitializeComponent();
@@ -39,7 +34,11 @@ namespace HoldItCore.Levels {
 		}
 
 		private void HandleTick(object sender, EventArgs e) {
-			this.AddPerson(new Person());
+			double val = rng.NextDouble();
+			if (val <= .5)
+				this.AddPerson(new OldMan());
+			else
+				this.AddPerson(new Person());
 		}
 	}
 }
