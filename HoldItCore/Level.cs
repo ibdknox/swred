@@ -1,20 +1,32 @@
 ﻿using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows;
+using System.Diagnostics;
+using System.ComponentModel;
+using System;
 
 namespace HoldItCore {
+
+	public enum LevelState {
+		Intro,
+		Playing,
+		Completed,
+		Failed,
+	}
+
 	public class Level : ContentControl {
 
 		private List<Stall> stalls = new List<Stall>();
 
-		private List<Person> persons = new List<Person>();
-		private Queue<Person> waitingLine = new Queue<Person>();
+		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
 
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
 		}
+
+		public event EventHandler Completed;
 
 		public override void OnApplyTemplate() {
 			base.OnApplyTemplate();
@@ -32,26 +44,51 @@ namespace HoldItCore {
 
 			this.peopleCanvas = (Panel)content.FindName("People");
 
-			//FrameworkElement lineStartElement = content.FindName("LineStart") as FrameworkElement;
+			if (!DesignerProperties.IsInDesignTool)
+				this.State = LevelState.Intro;
 
-			//Point lineStart = lineStartElement.TransformToVisual(this.peopleCanvas).Transform(new Point(0,0));
+			VisualStateGroup playStates = (VisualStateGroup)this.GetTemplateChild("PlayStates");
+			playStates.CurrentStateChanged += this.HandleCurrentStateChanged;
+		}
 
-			this.Start();
+		private void HandleCurrentStateChanged(object sender, VisualStateChangedEventArgs e) {
+			if (e.NewState.Name == LevelState.Intro.ToString()) {
+				this.State = LevelState.Playing;
+				this.Start();
+			}
+			else if (e.NewState.Name == LevelState.Completed.ToString()) {
+				if (this.Completed != null)
+					this.Completed(this, EventArgs.Empty);
+			}
 		}
 
 		protected void AddPerson(Person person) {
 			person.Level = this;
 			this.peopleCanvas.Children.Add(person);
 
-			//this.persons.Add(person);
-			this.waitingLine.Enqueue(person);
+			this.waitingLine.Add(person);
 			
 
 			this.UpdateWaitingLine();
 		}
 
+		protected virtual void OnCompleted() {
+			this.State = LevelState.Completed;
+		}
+
+		public void RemoveFromLine(Person person) {
+			Debug.Assert(this.waitingLine.Contains(person));
+
+			this.waitingLine.Remove(person);
+		}
+
 		public void RemovePerson(Person person) {
+			this.OnPersonRemoved(person);
 			this.peopleCanvas.Children.Remove(person);
+			
+		}
+
+		protected virtual void OnPersonRemoved(Person person) {
 		}
 
 		private void UpdateWaitingLine() {
@@ -63,9 +100,10 @@ namespace HoldItCore {
 		}
 
 		public void SendPersonTo(Stall stall) {
-			if (this.waitingLine.Count > 0) {
-				Person first = this.waitingLine.Dequeue();
-				first.GoToStall(stall);
+			if (this.selection != null) {
+
+				this.selection.GoToStall(stall);
+				this.Deselect(this.selection);
 
 				this.UpdateWaitingLine();
 			}
@@ -75,6 +113,31 @@ namespace HoldItCore {
 		}
 
 		protected virtual void Stop() {
+		}
+
+		private Person selection = null;
+		public void Select(Person person) {
+			if (this.selection != null)
+				this.selection.IsSelected = false;
+
+			this.selection = person;
+			if (this.selection != null)
+				this.selection.IsSelected = true;
+		}
+
+		public void Deselect(Person person) {
+			person.IsSelected = false;
+			if (this.selection == person)
+				this.selection = null;
+		}
+
+		private LevelState state;
+		public LevelState State {
+			get { return this.state; }
+			set {
+				this.state = value;
+				VisualStateManager.GoToState(this, this.State.ToString(), true);
+			}
 		}
 	}
 }

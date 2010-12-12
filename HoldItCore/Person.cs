@@ -5,12 +5,25 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace HoldItCore {
+
+	public enum PersonState {
+		Unset,
+		InLine,
+		HeadedToStall,
+		InStall,
+		PeedPants,
+		Exiting,
+	}
+
 	public class Person : Control {
 
 		private Point lineStart = new Point(35, 400);
-		private bool positioned = false;
+		private Point exitPoint = new Point(-100, 500);
+		private Point enterPoint = new Point(900, 400);
 		private Stall stall;
 		private TranslateTransform translation = new TranslateTransform();
 		private ScaleTransform peeScaleTransform = new ScaleTransform();
@@ -22,9 +35,10 @@ namespace HoldItCore {
 
 			this.RenderTransform = translation;
 
-			this.InitialBladderFill = .5;
+			this.InitialBladderFill = .2;
 			this.BladderFillRate = .1;
 			this.PeeRate = .2;
+			this.State = PersonState.Unset;
 		}
 
 		public override void OnApplyTemplate() {
@@ -32,7 +46,10 @@ namespace HoldItCore {
 
 			//this.peeScaleTransform = (ScaleTransform)this.GetTemplateChild("PeeScaleTransform");
 			((FrameworkElement)this.GetTemplateChild("PeeProgress")).RenderTransform = this.peeScaleTransform;
-			this.StartBladderFilling();
+
+			// Stop the animations at design-time.
+			if (!DesignerProperties.IsInDesignTool)
+				this.StartBladderFilling();
 		}
 
 		public Level Level { get; set; }
@@ -52,86 +69,123 @@ namespace HoldItCore {
 		/// </summary>
 		public double PeeRate { get; set; }
 
+		/// <summary>
+		/// For debugging.
+		/// </summary>
+		public PersonState State { get; set; }
+
 		public void PositionWaitingLine(int index) {
 			Point position = new Point(lineStart.X + 50 * index, lineStart.Y);
 
-			if (this.positioned)
+			if (this.State != PersonState.Unset)
 				this.AnimateTo(position);
 			else {
-				this.MoveTo(position);
-				this.positioned = true;
+				this.MoveTo(this.enterPoint);
+				this.AnimateTo(position, 400);
+
+				this.State = PersonState.InLine;
 			}
+
+			
 		}
 
 		public void GoToStall(Stall stall) {
+			this.State = PersonState.HeadedToStall;
+
 			stall.PersonEntering(this);
 			this.stall = stall;
 
 			Point stallPosition = stall.TransformToVisual((FrameworkElement)this.Parent).Transform(new Point(0, 0));
 			Storyboard sb = this.AnimateTo(stallPosition);
 
+			this.Level.RemoveFromLine(this);
+
 			sb.Completed += this.HandleGoToStallAnimationCompleted;
 		}
 
 		private void HandleGoToStallAnimationCompleted(object sender, EventArgs e) {
-			this.OnEnteredStall();
+			// May have had an accident on way to stall.
+			if (this.stall != null) {
+				this.OnEnteredStall();
+			}
 		}
 
 		public void StartBladderFilling() {
-			DoubleAnimation bladderFillScale = new DoubleAnimation() {
-				From = this.InitialBladderFill,
-				To = 1,
-				Duration = TimeSpan.FromSeconds((1 - this.InitialBladderFill) / this.BladderFillRate),
-			};
-			Storyboard.SetTargetProperty(bladderFillScale, new PropertyPath(ScaleTransform.ScaleXProperty));
-
-			
-			Storyboard.SetTarget(this.bladderFillAnimation, this.peeScaleTransform);
-			this.bladderFillAnimation.Children.Add(bladderFillScale);
+			this.peeScaleTransform.ScaleX = this.InitialBladderFill;
+			this.bladderFillAnimation = this.AnimatePeeTo(1, this.BladderFillRate);
 
 			this.bladderFillAnimation.Completed += this.HandleBladderFillAnimationCompleted;
-			this.bladderFillAnimation.Begin();
-
 		}
 
 		private void HandleBladderFillAnimationCompleted(object sender, EventArgs e) {
+
+			VisualStateManager.GoToState(this, "PeedPants", true);
+
+			if (this.stall != null) {
+				this.stall.PersonLeft();
+				this.stall = null;
+			}
+			else {
+				if (this.Level != null)
+					this.Level.RemoveFromLine(this);
+			}
+
+			if (this.IsSelected)
+				this.Level.Deselect(this);
+
+			Storyboard exitingAnimation = this.AnimateTo(this.exitPoint);
+			exitingAnimation.Completed += this.HandleExitCompleted;
 		}
 
 		private void StartPeeing() {
 			double scale = this.peeScaleTransform.ScaleX;
 			this.bladderFillAnimation.Stop();
-			
-			DoubleAnimation bladderEmptyScale = new DoubleAnimation() {
-				To = 0,
-				From = scale,
-				Duration = TimeSpan.FromSeconds(scale / this.PeeRate),
-			};
-			Storyboard.SetTargetProperty(bladderEmptyScale, new PropertyPath(ScaleTransform.ScaleXProperty));
-
-			Storyboard.SetTarget(bladderEmptyScale, this.peeScaleTransform);
-			this.bladderEmptyAnimation.Children.Add(bladderEmptyScale);
-
+			this.peeScaleTransform.ScaleX = scale;
+			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
 			this.bladderEmptyAnimation.Completed += this.HandleBladderEmptyAnimationCompleted;
-			this.bladderEmptyAnimation.Begin();
 		}
 
 		private void HandleBladderEmptyAnimationCompleted(object sender, EventArgs e) {
 			this.LeaveStall();
 		}
 
+		private Storyboard AnimatePeeTo(double percent, double rate) {
+			double startScale = this.peeScaleTransform.ScaleX;
+
+			DoubleAnimation animation = new DoubleAnimation() {
+				To = percent,
+				From = startScale,
+				Duration = TimeSpan.FromSeconds(Math.Abs(percent - startScale) / rate),
+			};
+			Storyboard.SetTargetProperty(animation, new PropertyPath(ScaleTransform.ScaleXProperty));
+
+			Storyboard sb = new Storyboard();
+			Storyboard.SetTarget(sb, this.peeScaleTransform);
+			sb.Children.Add(animation);
+
+			sb.Begin();
+
+			return sb;
+		}
+		
+
 		protected virtual void OnEnteredStall() {
+			this.State = PersonState.InStall;
+
 			this.stall.PersonEntered();
 			this.StartPeeing();
 		}
 
 		protected virtual void LeaveStall() {
-			Storyboard sb = this.AnimateTo(new Point(-100, 500));
+			this.State = PersonState.Exiting;
+			Storyboard sb = this.AnimateTo(this.exitPoint);
 			this.stall.PersonLeft();
 			sb.Completed += this.HandleExitCompleted;
 		}
 
 		private void HandleExitCompleted(object sender, EventArgs e) {
-			this.Level.RemovePerson(this);
+			if (this.Level != null)
+				this.Level.RemovePerson(this);
 		}
 
 		private void MoveTo(Point point) {
@@ -140,6 +194,10 @@ namespace HoldItCore {
 		}
 
 		private Storyboard AnimateTo(Point point) {
+			return this.AnimateTo(point, 400);
+		}
+
+		private Storyboard AnimateTo(Point point, double rate) {
 
 			double xOffset = point.X - this.translation.X;
 			double yOffset = point.Y - this.translation.Y;
@@ -147,7 +205,7 @@ namespace HoldItCore {
 			double distance = Math.Sqrt(xOffset * xOffset + yOffset * yOffset);
 
 			
-			Duration duration = new Duration(TimeSpan.FromSeconds(distance / 200));
+			Duration duration = new Duration(TimeSpan.FromSeconds(distance / rate));
 			DoubleAnimation xAnim = new DoubleAnimation() {
 				To = point.X,
 				Duration = duration,
@@ -170,5 +228,30 @@ namespace HoldItCore {
 
 			return sb;
 		}
+
+		protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) {
+			base.OnMouseLeftButtonDown(e);
+
+			this.Level.Select(this);
+		}
+
+		public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(Person), new PropertyMetadata(default(bool), Person.HandleIsSelectedChanged));
+		public bool IsSelected {
+			get { return (bool)this.GetValue(Person.IsSelectedProperty); }
+			set { this.SetValue(Person.IsSelectedProperty, value); }
+		}
+
+		private static void HandleIsSelectedChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
+			((Person)sender).OnIsSelectedChanged(e);
+		}
+
+		protected virtual void OnIsSelectedChanged(DependencyPropertyChangedEventArgs e) {
+			if (this.IsSelected)
+				VisualStateManager.GoToState(this, "Selected", true);
+			else
+				VisualStateManager.GoToState(this, "Deselected", true);
+		}
+
+		
 	}
 }

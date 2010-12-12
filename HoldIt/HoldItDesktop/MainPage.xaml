@@ -8,10 +8,13 @@
 	x:Class="HoldItDesktop.MainPage"
     mc:Ignorable="d"
     d:DesignHeight="724" d:DesignWidth="835" Width="Auto" Height="Auto">
+	<UserControl.Resources>
+
+	</UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="#FF858585">
     	<Grid HorizontalAlignment="Center" Height="480" VerticalAlignment="Center" Width="800">
-    		<HoldItCore_Levels:IntroLevel/>
+			<core:LevelContainer/>
     	</Grid>
     </Grid>
 </UserControl>

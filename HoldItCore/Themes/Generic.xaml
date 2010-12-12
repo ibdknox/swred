@@ -1,20 +1,101 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
     xmlns:local="clr-namespace:HoldItCore">
 
 
     <Style TargetType="local:Level">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:Level">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="local:Level">
 					<Grid>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="PlayStates">
+								<VisualStateGroup.Transitions>
+									<VisualTransition GeneratedDuration="0" To="Intro">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IntroText">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+											</DoubleAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="IntroText">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame KeyTime="0:0:1">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualTransition>
+									<VisualTransition GeneratedDuration="0" To="Lost">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="LostText">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame KeyTime="0:0:1">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LostText">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualTransition>
+									<VisualTransition GeneratedDuration="0" To="Completed">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CompletedText">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+												<DiscreteObjectKeyFrame KeyTime="0:0:1">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CompletedText">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualTransition>
+								</VisualStateGroup.Transitions>
+								<VisualState x:Name="Intro"/>
+								<VisualState x:Name="Playing"/>
+								<VisualState x:Name="Lost"/>
+								<VisualState x:Name="Completed"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
 						<ContentPresenter/>
+						<Grid>
+							<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+							<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+							<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+						</Grid>
 					</Grid>
 				</ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
     <Style TargetType="local:Urinal">
 		<Setter Property="Height" Value="170"/>
@@ -35,23 +116,45 @@
 		<Setter Property="Height" Value="185"/>
 		<Setter Property="Width" Value="125"/>
         <Setter Property="Template">
-            <Setter.Value>
-				<ControlTemplate TargetType="local:Person">
-					<Grid>
-						<Grid Margin="38,0,37,0" Opacity="0.5">
-							<Border BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
-							<Ellipse Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
+				<Setter.Value>
+					<ControlTemplate TargetType="local:Person">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="PeeStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:1" To="PeedPants"/>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Waiting"/>
+									<VisualState x:Name="PeedPants">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Deselected"/>
+									<VisualState x:Name="Selected">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FFFF7839" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse1" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="#FFFFA47A" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Grid Margin="38,0,37,0" Opacity="0.5">
+								<Border x:Name="border" BorderThickness="1" Background="#FF85BFFF" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
+								<Ellipse x:Name="ellipse1" Fill="#FF3997FF" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
+							</Grid>
+							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
+								<Rectangle Fill="#4CFFF500" Stroke="Black"/>
+								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
+								<Rectangle Stroke="Black"/>
+							</Grid>
+							<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50"/>
 						</Grid>
-						<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
-							<Rectangle Fill="#4CFFF500" Stroke="Black"/>
-							<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5">
-							</Rectangle>
-							<Rectangle Stroke="Black"/>
-						</Grid>
-					</Grid>
-				</ControlTemplate>
-            </Setter.Value>
-        </Setter>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
     </Style>
 
     <Style TargetType="local:Stall">

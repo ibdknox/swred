@@ -56,6 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Level.cs" />
+    <Compile Include="LevelContainer.xaml.cs">
+      <DependentUpon>LevelContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LevelInfo.cs" />
+    <Compile Include="Levels\Easy.xaml.cs">
+      <DependentUpon>Easy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Levels\IntroLevel.xaml.cs">
       <DependentUpon>IntroLevel.xaml</DependentUpon>
     </Compile>
@@ -66,6 +73,14 @@
     <Compile Include="Urinal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="LevelContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Levels\Easy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Levels\IntroLevel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
