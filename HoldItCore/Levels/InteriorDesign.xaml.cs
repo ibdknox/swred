@@ -17,6 +17,8 @@ namespace HoldItCore.Levels {
 		public InteriorDesign() {
 			InitializeComponent();
 
+			this.Remaining = 25;
+
 			this.timer.Tick += this.HandleTick;
 		}
 
@@ -28,7 +30,7 @@ namespace HoldItCore.Levels {
 			this.Spawn();
 		}
 
-		protected override void Stop() {
+		public override void Stop() {
 			base.Stop();
 
 			this.timer.Stop();

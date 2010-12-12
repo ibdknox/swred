@@ -12,9 +12,24 @@
 		Foreground="{StaticResource PhoneForegroundBrush}"
 		SupportedOrientations="Portrait" Orientation="Portrait"
 		shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.Resources>
+		<DataTemplate x:Key="ItemTemplate">
+			<StackPanel>
+				<TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+				<TextBlock TextWrapping="Wrap" Text="{Binding Description}" Style="{StaticResource PhoneTextSmallStyle}" Margin="37,0,12,0"/>
+			</StackPanel>
+		</DataTemplate>
+	</phone:PhoneApplicationPage.Resources>
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar IsMenuEnabled="False">
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.feature.settings.rest.png" Text="Settings" Click="HandleShowSettings"/>
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.favs.rest.png" Text="Scores" Click="HandleShowScores"/>
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="help"/>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
 	<!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot" Background="Transparent">
+	<Grid x:Name="LayoutRoot" Background="Transparent" d:DataContext="{Binding Source={StaticResource SampleDataSource}}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
@@ -25,13 +40,11 @@
 			<TextBlock x:Name="ApplicationTitle" Text="Hold It!" Style="{StaticResource PhoneTextNormalStyle}"/>
 			<TextBlock x:Name="PageTitle" Text="Hold It" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
+		<Grid x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
+			<ListBox Margin="0,0,1,0" ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding Levels}" SelectionChanged="HandleSelectionChanged"/>
+		</Grid>
 
 		<!--ContentPanel - place additional content here-->
-		<StackPanel x:Name="ContentPanel" Orientation="Horizontal" Grid.Row="1" Margin="12,0,12,0">
-			<Button x:Name="PlayButton" Content="Play" VerticalAlignment="Bottom" Margin="0,0,8,8"/>
-			<Button x:Name="Scores" Content="High Scores" VerticalAlignment="Bottom" Margin="0,0,8,8"/>
-			<Button x:Name="Settings" Content="Settings" VerticalAlignment="Bottom" Margin="0,0,8,8" />
-		</StackPanel>
 	</Grid>
 
 </phone:PhoneApplicationPage>

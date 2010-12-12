@@ -4,6 +4,7 @@ using System.Windows;
 using System.Diagnostics;
 using System.ComponentModel;
 using System;
+using System.Linq;
 using HoldItCore.People;
 using System.Net;
 
@@ -29,7 +30,9 @@ namespace HoldItCore {
 		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
-		private Panel alertPanel;
+
+		public int CurrentPeopleInFlight { get; private set; }
+		
 
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
@@ -55,7 +58,7 @@ namespace HoldItCore {
 			}
 
 			this.peopleCanvas = (Panel)content.FindName("People");
-			this.alertPanel = (Panel)this.GetTemplateChild("AlertPanel");
+			
 
 			if (!DesignerProperties.IsInDesignTool)
 				this.State = LevelState.Intro;
@@ -76,11 +79,16 @@ namespace HoldItCore {
 		}
 
 		protected void AddPerson(Person person) {
+			if (this.CurrentPeopleInFlight - this.Remaining == 0)
+				return;
+
 			person.Level = this;
+
+			this.CurrentPeopleInFlight++;
+
 			this.peopleCanvas.Children.Add(person);
 
 			this.waitingLine.Add(person);
-			
 
 			this.UpdateWaitingLine();
 		}
@@ -99,7 +107,15 @@ namespace HoldItCore {
 		public void RemovePerson(Person person) {
 			this.OnPersonRemoved(person);
 			this.peopleCanvas.Children.Remove(person);
-			
+
+			this.CurrentPeopleInFlight--;
+            this.Remaining--;
+
+			if (this.CurrentPeopleInFlight == 0 && this.Remaining == 0)
+			{
+				// Level is finished!
+				this.OnCompleted();
+			}
 		}
 
 		protected virtual void OnPersonRemoved(Person person) {
@@ -129,7 +145,10 @@ namespace HoldItCore {
 		public void ScoreStallChoice(Stall stall) {
 			int neighbors = this.GetNeighborCount(stall);
 			if (neighbors > 0)
-				this.ModifyScore(neighbors * (-15), "Too close!");
+			{
+				this.AdjustScore(neighbors * (-15));
+				stall.Alert(neighbors * (-15), "Too close!");
+			}
 		}
 
 		public int GetNeighborCount(Stall stall) {
@@ -154,7 +173,7 @@ namespace HoldItCore {
 		protected virtual void Start() {
 		}
 
-		protected virtual void Stop() {
+		public virtual void Stop() {
 		}
 
 		private Person selection = null;
@@ -173,18 +192,9 @@ namespace HoldItCore {
 				this.selection = null;
 		}
 
-		/// <summary>
-		/// Modify the score with the given value (may be negative, for negative points)
-		/// </summary>
-		public void ModifyScore(int incrementValue, string reason)
+		public void AdjustScore(int change)
 		{
-			ScoreAlert alert = new ScoreAlert();
-			this.alertPanel.Children.Add(alert);
-
-			alert.Alert = incrementValue;
-			alert.Description = reason;
-
-			Score = Score + incrementValue;
+			Score += change;
 		}
 
 		public void AccidentHappened()
@@ -206,6 +216,13 @@ namespace HoldItCore {
 			set { this.SetValue(Level.AccidentsProperty, value); }
 		}
 
+		public static readonly DependencyProperty RemainingProperty = DependencyProperty.Register("Remaining", typeof(int), typeof(Level), new PropertyMetadata(default(int)));
+		public int Remaining
+		{
+			get { return (int)this.GetValue(Level.RemainingProperty); }
+			set { this.SetValue(Level.RemainingProperty, value); }
+		}
+
 		private LevelState state;
 		public LevelState State {
 			get { return this.state; }
@@ -214,9 +231,6 @@ namespace HoldItCore {
 				VisualStateManager.GoToState(this, this.State.ToString(), true);
 			}
 		}
-
-
-
 
 		public static readonly DependencyProperty ScoreIncrementProperty = DependencyProperty.Register("ScoreIncrement", typeof(double), typeof(Level), new PropertyMetadata(default(double)));
 		public double ScoreIncrement {
