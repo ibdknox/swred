@@ -24,6 +24,7 @@ namespace HoldItCore {
 
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
+			this.DataContext = this;
 		}
 
 		public event EventHandler Completed;
@@ -102,6 +103,13 @@ namespace HoldItCore {
 		public void SendPersonTo(Stall stall) {
 			if (this.selection != null) {
 
+				int stallIndex = this.stalls.IndexOf(stall);
+
+				if (stallIndex > 0 && this.stalls[stallIndex - 1].Person != null)
+					this.ModifyScore(-15, "Too close!");
+				if (stallIndex < this.stalls.Count - 1 && this.stalls[stallIndex + 1].Person != null)
+					this.ModifyScore(-15, "Too close!");
+
 				this.selection.GoToStall(stall);
 				this.Deselect(this.selection);
 
@@ -129,6 +137,42 @@ namespace HoldItCore {
 			person.IsSelected = false;
 			if (this.selection == person)
 				this.selection = null;
+		}
+
+		/// <summary>
+		/// Modify the score with the given value (may be negative, for negative points)
+		/// </summary>
+		public void ModifyScore(int incrementValue, string reason)
+		{
+			Score = Score + incrementValue;
+
+			ScoreModification modification = new ScoreModification()
+			{
+				ModificationType = incrementValue > 0 ? ModificationType.Positive : ModificationType.Negative,
+				AbsoluteValue = Math.Abs(incrementValue),
+				Reason = reason
+			};
+
+			LastScoreModification = modification;
+		}
+
+		public void AccidentHappened()
+		{
+			this.Accidents += 1;
+		}
+
+		public static readonly DependencyProperty ScoreProperty = DependencyProperty.Register("Score", typeof(int), typeof(Level), new PropertyMetadata(default(int)));
+		private int Score
+		{
+			get { return (int)this.GetValue(Level.ScoreProperty); }
+			set { this.SetValue(Level.ScoreProperty, value); }
+		}
+
+		public static readonly DependencyProperty AccidentsProperty = DependencyProperty.Register("Accidents", typeof(int), typeof(Level), new PropertyMetadata(default(int)));
+		private int Accidents
+		{
+			get { return (int)this.GetValue(Level.AccidentsProperty); }
+			set { this.SetValue(Level.AccidentsProperty, value); }
 		}
 
 		private LevelState state;
