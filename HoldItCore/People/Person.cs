@@ -176,7 +176,7 @@ namespace HoldItCore.People {
 			this.peeScaleTransform.ScaleX = scale;
 			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
 			this.bladderEmptyAnimation.Completed += (s, e) => {
-				stopSound();
+				SoundManager.Stop(stopSound);
 				this.HandleBladderEmptyAnimationCompleted(); 
 			};
 		}

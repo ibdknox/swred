@@ -164,6 +164,12 @@
     <Resource Include="People\Old Man Front Glow.png" />
     <Resource Include="People\Phone Guy Front Glow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sounds\flush.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sounds\background.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

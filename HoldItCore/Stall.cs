@@ -32,13 +32,11 @@ namespace HoldItCore {
 
 		public void Alert(int incrementValue, string reason)
 		{
-			/*
 			ScoreAlert alert = new ScoreAlert();
 			this.alertPanel.Children.Add(alert);
 
 			alert.Alert = incrementValue;
 			alert.Description = reason;
-			 */
 		}
 
 		public void PersonEntering(Person person) {

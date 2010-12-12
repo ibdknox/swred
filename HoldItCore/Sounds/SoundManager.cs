@@ -10,11 +10,16 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Resources;
+using System.Collections.Generic;
 
 namespace HoldItCore.Sounds
 {
     public class SoundManager
     {
+
+
+		private static Dictionary<int, Action> stops = new Dictionary<int, Action>();
+		private static int counter = 0;
 
         private static ISoundPlayer _player;
         public static void InitSoundSource(ISoundPlayer player)
@@ -22,12 +27,33 @@ namespace HoldItCore.Sounds
             _player = player;
         }
 
-        public static Action Play(string curSound, bool loop)
+        public static int Play(string curSound, bool loop)
         {
             if (_player == null)
-				return () => { };
+				return -1;
 
-			return _player.Play(curSound, loop);
+			counter++;
+			stops[counter] = _player.Play(curSound, loop);
+
+			return counter;
         }
+
+		public static void Stop(int index)
+		{
+			if (index < 0)
+				return;
+
+			stops[index]();
+			stops.Remove(index);
+		}
+
+		public static void StopAll()
+		{
+			foreach (var index in stops.Keys)
+			{
+				stops[index]();
+			}
+			stops.Clear();
+		}
     }
 }
