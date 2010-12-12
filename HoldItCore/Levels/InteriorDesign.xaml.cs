@@ -47,7 +47,7 @@ namespace HoldItCore.Levels {
 			else if (val < .5)
 				this.AddPerson(new OldMan());
 			else
-				this.AddPerson(new Person());
+				this.AddPerson(new Normal());
 		}
 	}
 }
