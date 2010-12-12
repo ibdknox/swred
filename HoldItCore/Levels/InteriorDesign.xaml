@@ -13,16 +13,33 @@
 
 
 
+		<Style x:Key="UrinalStyle1" TargetType="local:Urinal">
+			<Setter Property="Height" Value="220"/>
+			<Setter Property="Width" Value="198"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="local:Urinal">
+						<Canvas>
+							<Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+						</Canvas>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+
+
 	</local:Level.Resources>
     
-    <Canvas x:Name="LayoutRoot" Background="White">
-    	<Canvas x:Name="Urinals" Height="170" Canvas.Left="35" Canvas.Top="122" Width="641">
-    		<local:Urinal Height="170" />
-    		<local:Urinal Height="170" Canvas.Left="387" />
-    		<local:Urinal Height="170" Width="125" Canvas.Left="258" />
-    		<local:Urinal Height="170" Canvas.Left="129" />
-    		<local:Urinal Height="170" Canvas.Left="516" />
-    	</Canvas>
-    	<Canvas x:Name="People"/>
-    </Canvas>
+    <Grid x:Name="LayoutRoot" Background="White">
+		<Image Source="WoodHex.png" Stretch="Fill"/>
+		<StackPanel x:Name="Urinals" Orientation="Horizontal" d:LayoutOverrides="Width, Height" VerticalAlignment="Top">
+			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
+			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
+			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
+			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
+			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
+		</StackPanel>
+		<Canvas x:Name="People" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+	</Grid>
 </local:Level>
