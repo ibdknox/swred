@@ -1,0 +1,133 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="HoldIt.PivotPage1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Title="Hold It!">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="Instructions">
+
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="The Drunk">
+                <StackPanel >
+                    <TextBlock TextWrapping="Wrap">
+The Kid may not be that tall but he knows how to work a toilet alright. The Kid isn’t that tall so make sure to send him to a Lowboy or a stall.
+
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Source="/HoldItCore;component/People/Drunk Front No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" OpacityMask="Black" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+It takes only one drink to get me drunk.
+The trouble is, I can't remember if it's the thirteenth or the fourteenth.
+– George Burns
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </controls:PivotItem>
+            <controls:PivotItem Header="The Kid">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+                The Drunk doesn’t care where you want him to go.
+                He’s gotta go to the bathroom and he’s gonna go right away.
+                Just pray he doesn’t vomit in the sink.
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Source="/HoldItCore;component/People/Kid Front No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+You ain't cool, unless, you pee your pants! Everybody my age pee their pants; it's the coolest!
+– Adam Sandler (Billy Madison)
+
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Nerves">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+                Nerves doesn’t have a problem. You have a problem so just don’t stand so close. Nerves doesn’t pee when he’s next to anybody.
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Source="/HoldItCore;component/People/Nervous Pee-er No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+For marriage to be a success, every woman and every man should have her and his own bathroom. The end. 
+– Catherine Zeta-Jones
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </controls:PivotItem>
+            <controls:PivotItem Header="The Old Man">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+When the Old Man was your age he had to use an outhouse. Show some respect kid. The Old Man is a little slow and has to go a bit more often then he used to.
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Source="/HoldItCore;component/People/Old Man No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+At a formal dinner party, the person nearest death should always be seated closest to the bathroom.
+– George Carlin
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </controls:PivotItem>
+            <controls:PivotItem Header="The Peeker">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+The Peeker is just scoping out the competition, seeing who can measure up. No one else will go next to the Peeker.
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Source="/HoldItCore;component/People/Looker No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+Never confuse the size of your paycheck with the size of your talent. 
+– Marlon Brando
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </controls:PivotItem>
+            <controls:PivotItem Header="The Phone Jerk">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+The Phone Jerk is an important person. He tweets in the bedroom and takes calls at the theater. Make his life hell for extra points.
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Source="/HoldItCore;component/People/Phone Guy No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+Using your cellphone or laptop in the bathroom is perfectly acceptable–just rinse and lather afterwards!
+– Anonymous
+
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </controls:PivotItem>
+
+        </controls:Pivot>
+    </Grid>
+
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+    
+</phone:PhoneApplicationPage>

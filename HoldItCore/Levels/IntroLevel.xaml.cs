@@ -16,6 +16,8 @@ namespace HoldItCore.Levels {
 		public IntroLevel() {
 			InitializeComponent();
 
+            this.Remaining = 25;
+
 			this.timer.Tick += this.HandleTick;
 		}
 

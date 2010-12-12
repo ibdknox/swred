@@ -81,13 +81,12 @@ namespace HoldItCore {
 		}
 
 		protected void AddPerson(Person person) {
-			if (this.Remaining == 0)
+			if (this.CurrentPeopleInFlight - this.Remaining == 0)
 				return;
 
 			person.Level = this;
 
 			this.CurrentPeopleInFlight++;
-			this.Remaining--;
 
 			this.peopleCanvas.Children.Add(person);
 
@@ -112,8 +111,9 @@ namespace HoldItCore {
 			this.peopleCanvas.Children.Remove(person);
 
 			this.CurrentPeopleInFlight--;
+            this.Remaining--;
 
-			if (this.CurrentPeopleInFlight == 0 || this.Remaining == 0)
+			if (this.CurrentPeopleInFlight == 0 && this.Remaining == 0)
 			{
 				// Level is finished!
 				this.OnCompleted();

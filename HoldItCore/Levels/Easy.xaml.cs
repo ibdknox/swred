@@ -20,11 +20,10 @@ namespace HoldItCore.Levels {
 			Interval = TimeSpan.FromSeconds(1.5),
 		};
 
-		private int toBeSpawnedCount = 3;
-		private int inFlightCount = 0;
-
 		public Easy() {
 			InitializeComponent();
+
+            this.Remaining = 5;
 
 			this.timer.Tick += this.HandleTick;
 		}
@@ -48,29 +47,7 @@ namespace HoldItCore.Levels {
 		}
 
 		private void Spawn() {
-			if (this.toBeSpawnedCount > 0) {
-				this.AddPerson(new Person());
-				++this.inFlightCount;
-				--this.toBeSpawnedCount;
-			}
-			else {
-				this.timer.Stop();
-			}
+		    this.AddPerson(new Person());
 		}
-
-		protected override void OnPersonRemoved(Person person) {
-			base.OnPersonRemoved(person);
-
-			--this.inFlightCount;
-			Debug.Assert(this.inFlightCount >= 0);
-
-			if (this.toBeSpawnedCount == 0 && this.inFlightCount == 0) {
-				this.OnCompleted();
-			}
-		}
-
-
-
-
 	}
 }
