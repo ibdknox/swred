@@ -266,10 +266,108 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+		<Style x:Key="PersonStyle1" TargetType="HoldItCore_People:Person">
+			<Setter Property="Height" Value="250"/>
+			<Setter Property="Width" Value="177"/>
+			<Setter Property="Background" Value="#FF85BFFF"/>
+			<Setter Property="FrontImage" Value="/HoldItCore;component/People/Looker No BG.png"/>
+			<Setter Property="BackImage" Value="/HoldItCore;component/People/Looker behind No BG.png"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="HoldItCore_People:Person">
+						<Grid Background="Transparent">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="PeeStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:1" To="PeedPants"/>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Waiting"/>
+									<VisualState x:Name="PeedPants">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Deselected"/>
+									<VisualState x:Name="Selected"/>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="TextStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0" To="Visible">
+											<Storyboard>
+												<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="speechBubble">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+													<DiscreteObjectKeyFrame KeyTime="0:0:1">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Collapsed</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="speechBubble">
+													<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Visible"/>
+									<VisualState x:Name="Hidden"/>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FacingStates">
+									<VisualState x:Name="Forwards">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FrontImage">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Backwards">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackImage">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Image x:Name="FrontImage" Source="{TemplateBinding FrontImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
+							<Image x:Name="BackImage" Source="{TemplateBinding BackImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
+							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="{TemplateBinding PeeMeterSize}" HorizontalAlignment="Left" Margin="64,15,0,0" IsHitTestVisible="False">
+								<Rectangle Fill="#F4454545" Stroke="Black"/>
+								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
+								<Rectangle Stroke="Black"/>
+							</Grid>
+							<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50" IsHitTestVisible="False"/>
+							<Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False">
+								<Grid Height="200" Canvas.Top="-200" Width="150" Canvas.Left="49">
+									<local:SpeechBubble x:Name="speechBubble" Content="{TemplateBinding SpeechText}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="24" Visibility="Collapsed"/>
+								</Grid>
+							</Canvas>
+							<Grid Background="Transparent" Width="100"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White">
 		<HoldItCore_People:Person VerticalAlignment="Bottom" d:LayoutOverrides="Height" Margin="227,0,288,35" Style="{StaticResource SpeechPerson}" SpeechText="I need to pee!"/>
 		<HoldItCore_Levels:Easy Style="{StaticResource EasyStyle1}"/>
+		<HoldItCore_People:Person Content="Person" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:LayoutOverrides="Width, Height" Margin="226,0,0,77" Style="{StaticResource PersonStyle1}"/>
 	</Grid>
 </UserControl>
