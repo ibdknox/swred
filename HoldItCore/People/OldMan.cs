@@ -43,7 +43,7 @@ namespace HoldItCore.People {
 
 
 			this.bladderEmptyMessages.Add(.3, delegate {
-				this.Say("Hotdog!");
+				this.Say("Hot dog!");
 			});
 
 			this.bladderEmptyMessages.Add(.3, delegate {
