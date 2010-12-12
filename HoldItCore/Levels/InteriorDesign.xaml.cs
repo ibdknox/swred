@@ -30,7 +30,7 @@ namespace HoldItCore.Levels {
 			this.Spawn();
 		}
 
-		protected override void Stop() {
+		public override void Stop() {
 			base.Stop();
 
 			this.timer.Stop();
