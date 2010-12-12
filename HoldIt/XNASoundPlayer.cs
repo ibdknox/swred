@@ -14,6 +14,7 @@ using System.Windows.Resources;
 using HoldItCore.Sounds;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace HoldIt
@@ -38,9 +39,12 @@ namespace HoldIt
             soundInstance.Play();
 
 			return () => {
-				if (soundInstance.IsDisposed)
+				try
 				{
 					soundInstance.Stop();
+				} catch(ArgumentException e) 
+				{
+					Debug.WriteLine("Weird sound issue");
 				}
 			};
         }
