@@ -37,12 +37,14 @@ namespace HoldItCore {
 
 			FrameworkElement content = (FrameworkElement)this.Content;
 			Panel layoutRoot = (Panel)content.FindName("Urinals");
+			if (layoutRoot != null) {
 
-			foreach (FrameworkElement child in layoutRoot.Children) {
-				Stall stall = child as Stall;
-				if (stall != null) {
-					stalls.Add(stall);
-					stall.Level = this;
+				foreach (FrameworkElement child in layoutRoot.Children) {
+					Stall stall = child as Stall;
+					if (stall != null) {
+						stalls.Add(stall);
+						stall.Level = this;
+					}
 				}
 			}
 
