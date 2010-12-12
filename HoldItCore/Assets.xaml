@@ -104,6 +104,67 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+		<Style x:Key="ScoreAlertStyle1" TargetType="local:ScoreAlert">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="local:ScoreAlert">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="AlertStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0" To="Float">
+											<Storyboard>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentControl">
+													<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="contentControl">
+													<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-100"/>
+												</DoubleAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="textBlock">
+													<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Float"/>
+									<VisualState x:Name="Steady"/>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="DirectionStates">
+									<VisualState x:Name="Plus">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FF40B230" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentControl" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="#FF40B230" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Minus">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentControl" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<ContentControl x:Name="contentControl" Content="{TemplateBinding Alert}" Opacity="0" RenderTransformOrigin="0.5,0.5">
+								<ContentControl.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</ContentControl.RenderTransform>
+							</ContentControl>
+							<TextBlock x:Name="textBlock" Margin="0,43,1,0" TextWrapping="Wrap" Text="{TemplateBinding Description}" d:LayoutOverrides="Width, Height" FontSize="24" Opacity="0"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="FontSize" Value="32"/>
+		</Style>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White">
@@ -111,5 +172,7 @@
 		<HoldItCore_People:OldMan HorizontalAlignment="Left" VerticalAlignment="Bottom" d:LayoutOverrides="Width, Height" Margin="8,0,0,61"/>
 		<HoldItCore_People:Person VerticalAlignment="Bottom" d:LayoutOverrides="Height" Margin="227,0,288,35" Style="{StaticResource SpeechPerson}" SpeechText="I need to pee!"/>
 		<local:SpeechBubble Content="This is a long piece of text." Margin="0,141,427,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="24"/>
+		<local:ScoreAlert Alert="500" VerticalAlignment="Top" Style="{StaticResource ScoreAlertStyle1}" Margin="253,153,264,0" Description="Good Job!" d:LayoutOverrides="Width"/>
+		<local:ScoreAlert Alert="Foo" HorizontalAlignment="Right" Margin="0,0,52,157" VerticalAlignment="Bottom"/>
 	</Grid>
 </UserControl>
