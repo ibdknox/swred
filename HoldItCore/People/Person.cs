@@ -112,6 +112,9 @@ namespace HoldItCore.People {
 			this.stall = stall;
 
 			Point stallPosition = stall.TransformToVisual((FrameworkElement)this.Parent).Transform(new Point(0, 0));
+			stallPosition.X += stall.ActualWidth / 2 - this.ActualWidth / 2;
+			stallPosition.Y += 30;
+
 			Storyboard sb = this.AnimateTo(stallPosition);
 
 			this.Level.RemoveFromLine(this);
