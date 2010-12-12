@@ -103,6 +103,11 @@ namespace HoldItCore.People {
 
 				this.State = PersonState.InLine;
 			}
+
+			this.OnWait();
+		}
+
+		protected virtual void OnWait() {
 		}
 
 		public virtual bool CanUseStall(Stall stall) {
@@ -126,6 +131,11 @@ namespace HoldItCore.People {
 			sb.Completed += this.HandleGoToStallAnimationCompleted;
 
 			VisualStateManager.GoToState(this, "Backwards", true);
+
+			this.OnHeadingToStall();
+		}
+
+		protected virtual void OnHeadingToStall() {
 		}
 
 		private void HandleGoToStallAnimationCompleted(object sender, EventArgs e) {
@@ -144,6 +154,10 @@ namespace HoldItCore.People {
 
 		private void HandleBladderFillAnimationCompleted(object sender, EventArgs e) {
 
+			this.OnPeedPants();
+		}
+
+		protected virtual void OnPeedPants() {
 			VisualStateManager.GoToState(this, "PeedPants", true);
 
 			this.Level.AccidentHappened();
@@ -188,6 +202,10 @@ namespace HoldItCore.People {
 		}
 
 		private void HandleBladderEmptyAnimationCompleted() {
+			this.OnBladderEmpty();
+		}
+
+		protected virtual void OnBladderEmpty() {
 			if (this.stall != null)
 				this.LeaveStall();
 		}
@@ -319,6 +337,11 @@ namespace HoldItCore.People {
 				VisualStateManager.GoToState(this, "Selected", true);
 			else
 				VisualStateManager.GoToState(this, "Deselected", true);
+		}
+
+		public void Say(string text) {
+			this.SpeechText = "";
+			this.SpeechText = text;
 		}
 
 		public static readonly DependencyProperty SpeechTextProperty = DependencyProperty.Register("SpeechText", typeof(string), typeof(Person), new PropertyMetadata(default(string), Person.HandleSpeechTextChanged));
