@@ -105,7 +105,7 @@
 							<TextBlock x:Name="Remaining" Text="{Binding Remaining}" FontSize="32" />
 						</StackPanel>
 
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="false" Margin="0,20,15,0">
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="false" Margin="0,20,15,0">
                             <TextBlock Text="Accidents: " FontSize="32"/>
                             <TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
                         </StackPanel>
@@ -122,8 +122,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Urinal">
                     <Canvas>
-                        <Grid x:Name="AlertPanel"/>
-                        <Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+						<Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+						<Canvas x:Name="AlertPanel" Height="0" Width="0" Margin="57,-50,0,0"/>
                     </Canvas>
                 </ControlTemplate>
             </Setter.Value>
