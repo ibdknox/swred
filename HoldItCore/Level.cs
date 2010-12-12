@@ -18,6 +18,12 @@ namespace HoldItCore {
 
 	public class Level : ContentControl {
 
+		public static List<string> LevelNames = new List<string>()
+		{
+			"Easy",
+			"Intro"
+		};
+
 		private List<Stall> stalls = new List<Stall>();
 
 		private List<Person> waitingLine = new List<Person>();
