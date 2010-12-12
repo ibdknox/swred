@@ -12,7 +12,9 @@ namespace HoldItCore {
 		}
 
 		public Level Level { get; set; }
-		
+
+		private Panel alertPanel; 
+
 		private Person person;
 		public Person Person {
 			get { return this.person; }
@@ -20,6 +22,23 @@ namespace HoldItCore {
 				Debug.Assert((this.person == null && value != null) || (this.person != null && value == null));
 				this.person = value;
 			}
+		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			this.alertPanel = (Panel)this.GetTemplateChild("AlertPanel");
+		}
+
+		public void Alert(int incrementValue, string reason)
+		{
+			/*
+			ScoreAlert alert = new ScoreAlert();
+			this.alertPanel.Children.Add(alert);
+
+			alert.Alert = incrementValue;
+			alert.Description = reason;
+			 */
 		}
 
 		public void PersonEntering(Person person) {
