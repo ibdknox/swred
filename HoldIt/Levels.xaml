@@ -12,7 +12,6 @@
     shell:SystemTray.IsVisible="False">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-    	<core:LevelContainer/>
     </Grid>
 
 </phone:PhoneApplicationPage>

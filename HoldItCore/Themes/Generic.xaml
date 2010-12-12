@@ -8,250 +8,257 @@
 	xmlns:peeps="clr-namespace:HoldItCore.People">
 
 
-	<Style TargetType="local:Level">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="local:Level">
-					<Grid>
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="PlayStates">
-								<VisualStateGroup.Transitions>
-									<VisualTransition GeneratedDuration="0" To="Intro">
-										<Storyboard>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IntroText">
-												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="IntroText">
-												<DiscreteObjectKeyFrame KeyTime="0">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Visible</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-												<DiscreteObjectKeyFrame KeyTime="0:0:1">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Collapsed</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-											</ObjectAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualTransition>
-									<VisualTransition GeneratedDuration="0" To="Lost">
-										<Storyboard>
-											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="LostText">
-												<DiscreteObjectKeyFrame KeyTime="0">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Visible</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-												<DiscreteObjectKeyFrame KeyTime="0:0:1">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Collapsed</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-											</ObjectAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LostText">
-												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualTransition>
-									<VisualTransition GeneratedDuration="0" To="Completed">
-										<Storyboard>
-											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CompletedText">
-												<DiscreteObjectKeyFrame KeyTime="0">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Visible</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-												<DiscreteObjectKeyFrame KeyTime="0:0:1">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Collapsed</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-											</ObjectAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CompletedText">
-												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualTransition>
-								</VisualStateGroup.Transitions>
-								<VisualState x:Name="Intro"/>
-								<VisualState x:Name="Playing"/>
-								<VisualState x:Name="Lost"/>
-								<VisualState x:Name="Completed"/>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-						<ContentPresenter/>
-						<Grid>
-							<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-							<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-							<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-						</Grid>
-						<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" IsHitTestVisible="false">
-							<Grid x:Name="AlertPanel"/>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="Score: " FontSize="32" />
-								<TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
-							</StackPanel>
+    <Style TargetType="local:Level">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="/HoldItCore;component/Fonts/Fonts.zip#valium" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Level">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PlayStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0" To="Intro">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IntroText">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="IntroText">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:1">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition GeneratedDuration="0" To="Lost">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="LostText">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:1">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LostText">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition GeneratedDuration="0" To="Completed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CompletedText">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:1">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CompletedText">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Intro"/>
+                                <VisualState x:Name="Playing"/>
+                                <VisualState x:Name="Lost"/>
+                                <VisualState x:Name="Completed"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter/>
+                        <Grid>
+                            <TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+                            <TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+                            <TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+                        </Grid>
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="false" Margin="15,20,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Score: " FontSize="32" />
+                                <TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
+                            </StackPanel>
+                        </StackPanel>
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False" Margin="10, 20, 10, 0">
+							<TextBlock Text="Remaining: " FontSize="32" />
+							<TextBlock x:Name="Remaining" Text="{Binding Remaining}" FontSize="32" />
 						</StackPanel>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="false">
-							<TextBlock Text="Accidents: " FontSize="32"/>
-							<TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
-						</StackPanel>
-					</Grid>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
 
-	<Style TargetType="local:Urinal">
-		<Setter Property="Height" Value="220"/>
-		<Setter Property="Width" Value="198"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="local:Urinal">
-					<Canvas>
-						<Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
-					</Canvas>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-	<Style x:Key="PersonBase" TargetType="peeps:Person">
-		<Setter Property="Height" Value="250"/>
-		<Setter Property="Width" Value="177"/>
-		<Setter Property="Background" Value="#FF85BFFF"/>
-		<Setter Property="FrontImage" Value="/HoldItCore;component/People/Looker No BG.png"/>
-		<Setter Property="SelectedImage" Value="/HoldItCore;component/People/Looker Front Glow.png"/>
-		<Setter Property="BackImage" Value="/HoldItCore;component/People/Looker behind No BG.png"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="peeps:Person">
-					<Grid Background="Transparent">
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="PeeStates">
-								<VisualStateGroup.Transitions>
-									<VisualTransition GeneratedDuration="0:0:1" To="PeedPants"/>
-								</VisualStateGroup.Transitions>
-								<VisualState x:Name="Waiting"/>
-								<VisualState x:Name="PeedPants">
-									<Storyboard>
-										<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-							<VisualStateGroup x:Name="SelectionStates">
-								<VisualState x:Name="Deselected"/>
-								<VisualState x:Name="Selected">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SelectedImage">
-											<DiscreteObjectKeyFrame KeyTime="0">
-												<DiscreteObjectKeyFrame.Value>
-													<Visibility>Visible</Visibility>
-												</DiscreteObjectKeyFrame.Value>
-											</DiscreteObjectKeyFrame>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-							<VisualStateGroup x:Name="TextStates">
-								<VisualStateGroup.Transitions>
-									<VisualTransition GeneratedDuration="0" To="Visible">
-										<Storyboard>
-											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="speechBubble">
-												<DiscreteObjectKeyFrame KeyTime="0">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Visible</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-												<DiscreteObjectKeyFrame KeyTime="0:0:1">
-													<DiscreteObjectKeyFrame.Value>
-														<Visibility>Collapsed</Visibility>
-													</DiscreteObjectKeyFrame.Value>
-												</DiscreteObjectKeyFrame>
-											</ObjectAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="speechBubble">
-												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualTransition>
-								</VisualStateGroup.Transitions>
-								<VisualState x:Name="Visible"/>
-								<VisualState x:Name="Hidden"/>
-							</VisualStateGroup>
-							<VisualStateGroup x:Name="FacingStates">
-								<VisualState x:Name="Forwards">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FrontImage">
-											<DiscreteObjectKeyFrame KeyTime="0">
-												<DiscreteObjectKeyFrame.Value>
-													<Visibility>Visible</Visibility>
-												</DiscreteObjectKeyFrame.Value>
-											</DiscreteObjectKeyFrame>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Backwards">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackImage">
-											<DiscreteObjectKeyFrame KeyTime="0">
-												<DiscreteObjectKeyFrame.Value>
-													<Visibility>Visible</Visibility>
-												</DiscreteObjectKeyFrame.Value>
-											</DiscreteObjectKeyFrame>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-						<Image x:Name="SelectedImage" Source="{TemplateBinding SelectedImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-						<Image x:Name="FrontImage" Source="{TemplateBinding FrontImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-						<Image x:Name="BackImage" Source="{TemplateBinding BackImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-						<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="{TemplateBinding PeeMeterSize}" HorizontalAlignment="Left" Margin="64,15,0,0" IsHitTestVisible="False">
-							<Rectangle Fill="#F4454545" Stroke="Black"/>
-							<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
-							<Rectangle Stroke="Black"/>
-						</Grid>
-						<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50" IsHitTestVisible="False"/>
-						<Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False">
-							<Grid Height="200" Canvas.Top="-200" Width="150" Canvas.Left="49">
-								<local:SpeechBubble x:Name="speechBubble" Content="{TemplateBinding SpeechText}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="24" Visibility="Collapsed"/>
-							</Grid>
-						</Canvas>
-						<Grid Background="Transparent" Width="100"/>
-					</Grid>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-	<Style TargetType="peeps:Person" BasedOn="{StaticResource PersonBase}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="false" Margin="0,20,15,0">
+                            <TextBlock Text="Accidents: " FontSize="32"/>
+                            <TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
-	<Style TargetType="peeps:OldMan" BasedOn="{StaticResource PersonBase}">
-		<Setter Property="Background" Value="#FFB4B4B4"/>
-		<Setter Property="PeeMeterSize" Value="30"/>
-		<Setter Property="FrontImage" Value="/HoldItCore;component/People/Old Man No BG.png"/>
-		<Setter Property="BackImage" Value="/HoldItCore;component/People/Old Man Behind No BG.png"/>
-		<Setter Property="SelectedImage" Value="/HoldItCore;component/People/Old Man Front Glow.png"/>
-	</Style>
+    <Style TargetType="local:Urinal">
+        <Setter Property="Height" Value="220"/>
+        <Setter Property="Width" Value="198"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Urinal">
+                    <Canvas>
+                        <Grid x:Name="AlertPanel"/>
+                        <Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<Style TargetType="peeps:Nerves" BasedOn="{StaticResource PersonBase}">
-		<Setter Property="Background" Value="Green"/>
-		<Setter Property="FrontImage" Value="/HoldItCore;component/People/Nervous Pee-er No BG.png"/>
-		<Setter Property="BackImage" Value="/HoldItCore;component/People/Nervous Pee-er behind No BG.png"/>
-		<Setter Property="SelectedImage" Value="/HoldItCore;component/People/Nervous Pee-er Glow.png"/>
-	</Style>
+    <Style x:Key="PersonBase" TargetType="peeps:Person">
+        <Setter Property="Height" Value="250"/>
+        <Setter Property="Width" Value="177"/>
+        <Setter Property="Background" Value="#FF85BFFF"/>
+        <Setter Property="FrontImage" Value="/HoldItCore;component/People/Looker No BG.png"/>
+        <Setter Property="SelectedImage" Value="/HoldItCore;component/People/Looker Front Glow.png"/>
+        <Setter Property="BackImage" Value="/HoldItCore;component/People/Looker behind No BG.png"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="peeps:Person">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PeeStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:1" To="PeedPants"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Waiting"/>
+                                <VisualState x:Name="PeedPants">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Deselected"/>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SelectedImage">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="TextStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0" To="Visible">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="speechBubble">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:1">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="speechBubble">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Visible"/>
+                                <VisualState x:Name="Hidden"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FacingStates">
+                                <VisualState x:Name="Forwards">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FrontImage">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Backwards">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackImage">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Image x:Name="SelectedImage" Source="{TemplateBinding SelectedImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
+                        <Image x:Name="FrontImage" Source="{TemplateBinding FrontImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
+                        <Image x:Name="BackImage" Source="{TemplateBinding BackImage}" IsHitTestVisible="False" Visibility="Collapsed"/>
+                        <Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="{TemplateBinding PeeMeterSize}" HorizontalAlignment="Left" Margin="64,15,0,0" IsHitTestVisible="False">
+                            <Rectangle Fill="#F4454545" Stroke="Black"/>
+                            <Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
+                            <Rectangle Stroke="Black"/>
+                        </Grid>
+                        <Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50" IsHitTestVisible="False"/>
+                        <Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False">
+                            <Grid Height="200" Canvas.Top="-200" Width="150" Canvas.Left="49">
+                                <local:SpeechBubble x:Name="speechBubble" Content="{TemplateBinding SpeechText}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="24" Visibility="Collapsed"/>
+                            </Grid>
+                        </Canvas>
+                        <Grid Background="Transparent" Width="100"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<Style TargetType="local:Stall">
+    <Style TargetType="peeps:Person" BasedOn="{StaticResource PersonBase}">
+    </Style>
+
+    <Style TargetType="peeps:OldMan" BasedOn="{StaticResource PersonBase}">
+        <Setter Property="Background" Value="#FFB4B4B4"/>
+        <Setter Property="PeeMeterSize" Value="30"/>
+        <Setter Property="FrontImage" Value="/HoldItCore;component/People/Old Man No BG.png"/>
+        <Setter Property="BackImage" Value="/HoldItCore;component/People/Old Man Behind No BG.png"/>
+        <Setter Property="SelectedImage" Value="/HoldItCore;component/People/Old Man Front Glow.png"/>
+    </Style>
+
+    <Style TargetType="peeps:Nerves" BasedOn="{StaticResource PersonBase}">
+        <Setter Property="Background" Value="Green"/>
+        <Setter Property="FrontImage" Value="/HoldItCore;component/People/Nervous Pee-er No BG.png"/>
+        <Setter Property="BackImage" Value="/HoldItCore;component/People/Nervous Pee-er behind No BG.png"/>
+        <Setter Property="SelectedImage" Value="/HoldItCore;component/People/Nervous Pee-er Glow.png"/>
+    </Style>
+
+    <Style TargetType="local:Stall">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Stall">
@@ -265,84 +272,84 @@
     </Style>
 
     <Style TargetType="local:SpeechBubble">
-    	<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="local:SpeechBubble">
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition/>
-							<RowDefinition Height="20"/>
-						</Grid.RowDefinitions>
-						<Rectangle Fill="#FFF4F4F5" Stroke="Black" RadiusX="13" RadiusY="13" Margin="0,0,0,-1.347"/>
-						<Path Data="M14,79 L12,98 L30.809013,78.995705" Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="11.5,-0.5,0,0" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="19.809" Grid.Row="1"/>
-						<TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" Margin="7,5"/>
-					</Grid>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Setter Property="Width" Value="150"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:SpeechBubble">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Fill="#FFF4F4F5" Stroke="Black" RadiusX="13" RadiusY="13" Margin="0,0,0,-1.347"/>
+                        <Path Data="M14,79 L12,98 L30.809013,78.995705" Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="11.5,-0.5,0,0" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="19.809" Grid.Row="1"/>
+                        <TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" Margin="7,5"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="150"/>
     </Style>
 
     <Style TargetType="local:ScoreAlert">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="local:ScoreAlert">
-					<Grid>
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="AlertStates">
-								<VisualStateGroup.Transitions>
-									<VisualTransition GeneratedDuration="0" To="Float">
-										<Storyboard>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentControl">
-												<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="contentControl">
-												<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-100"/>
-											</DoubleAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="textBlock">
-												<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
-												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualTransition>
-								</VisualStateGroup.Transitions>
-								<VisualState x:Name="Float"/>
-								<VisualState x:Name="Steady"/>
-							</VisualStateGroup>
-							<VisualStateGroup x:Name="DirectionStates">
-								<VisualState x:Name="Plus">
-									<Storyboard>
-										<ColorAnimation Duration="0" To="#FF40B230" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentControl" d:IsOptimized="True"/>
-										<ColorAnimation Duration="0" To="#FF40B230" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Minus">
-									<Storyboard>
-										<ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentControl" d:IsOptimized="True"/>
-										<ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-						<ContentControl x:Name="contentControl" Content="{TemplateBinding Alert}" Opacity="0" RenderTransformOrigin="0.5,0.5">
-							<ContentControl.RenderTransform>
-								<TransformGroup>
-									<ScaleTransform/>
-									<SkewTransform/>
-									<RotateTransform/>
-									<TranslateTransform/>
-								</TransformGroup>
-							</ContentControl.RenderTransform>
-						</ContentControl>
-						<TextBlock x:Name="textBlock" Margin="0,43,1,0" TextWrapping="Wrap" Text="{TemplateBinding Description}" FontSize="24" Opacity="0"/>
-					</Grid>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Setter Property="FontSize" Value="32"/>
-	</Style>
-	
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ScoreAlert">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="AlertStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0" To="Float">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentControl">
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="contentControl">
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-100"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="textBlock">
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Float"/>
+                                <VisualState x:Name="Steady"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DirectionStates">
+                                <VisualState x:Name="Plus">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="#FF40B230" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentControl" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="#FF40B230" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Minus">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentControl" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="contentControl" Content="{TemplateBinding Alert}" Opacity="0" RenderTransformOrigin="0.5,0.5">
+                            <ContentControl.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ContentControl.RenderTransform>
+                        </ContentControl>
+                        <TextBlock x:Name="textBlock" Margin="0,43,1,0" TextWrapping="Wrap" Text="{TemplateBinding Description}" FontSize="24" Opacity="0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontSize" Value="32"/>
+    </Style>
+
 </ResourceDictionary>

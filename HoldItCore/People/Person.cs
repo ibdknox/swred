@@ -168,16 +168,17 @@ namespace HoldItCore.People {
 
 		private double MaxPeeAmount { get; set; }
 
-		
-
 		protected void StartPeeing() {
-            SoundManager.Play(SoundIndex.peeing, false);
+            var stopSound = SoundManager.Play(SoundIndex.peeing, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
 			this.bladderFillAnimation.Stop();
 			this.peeScaleTransform.ScaleX = scale;
 			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
-			this.bladderEmptyAnimation.Completed += this.HandleBladderEmptyAnimationCompleted;
+			this.bladderEmptyAnimation.Completed += (s, e) => {
+				stopSound();
+				this.HandleBladderEmptyAnimationCompleted(); 
+			};
 		}
 
 		protected void StopPeeing() {
@@ -186,7 +187,7 @@ namespace HoldItCore.People {
 			this.peeScaleTransform.ScaleX = scale;
 		}
 
-		private void HandleBladderEmptyAnimationCompleted(object sender, EventArgs e) {
+		private void HandleBladderEmptyAnimationCompleted() {
 			if (this.stall != null)
 				this.LeaveStall();
 		}
@@ -210,6 +211,7 @@ namespace HoldItCore.People {
 
 			return sb;
 		}
+
 		
 
 		protected virtual void OnEnteredStall() {
@@ -235,7 +237,9 @@ namespace HoldItCore.People {
 
 		protected virtual void LeaveStall() {
 			this.State = PersonState.Exiting;
-			this.Level.ModifyScore((int)(this.MaxPeeAmount * 100), "Finished!");
+			int peeValue = (int)(this.MaxPeeAmount * 100);
+			this.Level.AdjustScore(peeValue);
+			this.stall.Alert(peeValue, "Finished!");
 			Storyboard sb = this.AnimateTo(this.exitPoint);
 			this.stall.PersonLeft();
 			sb.Completed += this.HandleExitCompleted;

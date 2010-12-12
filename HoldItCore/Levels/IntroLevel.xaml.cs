@@ -16,6 +16,8 @@ namespace HoldItCore.Levels {
 		public IntroLevel() {
 			InitializeComponent();
 
+            this.Remaining = 25;
+
 			this.timer.Tick += this.HandleTick;
 		}
 
@@ -27,7 +29,7 @@ namespace HoldItCore.Levels {
 			this.AddPerson(new Person());
 		}
 
-		protected override void Stop() {
+		public override void Stop() {
 			base.Stop();
 
 			this.timer.Stop();
