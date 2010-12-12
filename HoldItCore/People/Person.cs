@@ -22,9 +22,9 @@ namespace HoldItCore.People {
 
 	public class Person : Control {
 
-		private Point lineStart = new Point(35, 400);
+		private Point lineStart = new Point(35, 350);
 		private Point exitPoint = new Point(-100, 500);
-		private Point enterPoint = new Point(900, 400);
+		private Point enterPoint = new Point(900, 350);
 		private Stall stall;
 		private TranslateTransform translation = new TranslateTransform();
 		private ScaleTransform peeScaleTransform = new ScaleTransform();
@@ -47,7 +47,6 @@ namespace HoldItCore.People {
 		public override void OnApplyTemplate() {
 			base.OnApplyTemplate();
 
-			//this.peeScaleTransform = (ScaleTransform)this.GetTemplateChild("PeeScaleTransform");
 			((FrameworkElement)this.GetTemplateChild("PeeProgress")).RenderTransform = this.peeScaleTransform;
 
 			// Stop the animations at design-time.
@@ -92,7 +91,7 @@ namespace HoldItCore.People {
 		public PersonState State { get; set; }
 
 		public void PositionWaitingLine(int index) {
-			Point position = new Point(lineStart.X + 50 * index, lineStart.Y);
+			Point position = new Point(lineStart.X + 75 * index, lineStart.Y);
 
 			if (this.State != PersonState.Unset)
 				this.AnimateTo(position);
@@ -261,7 +260,8 @@ namespace HoldItCore.People {
 		protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) {
 			base.OnMouseLeftButtonDown(e);
 
-			this.Level.Select(this);
+			if (this.State == PersonState.InLine)
+				this.Level.Select(this);
 		}
 
 		public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(Person), new PropertyMetadata(default(bool), Person.HandleIsSelectedChanged));

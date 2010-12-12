@@ -131,7 +131,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="peeps:Person">
-					<Grid>
+					<Grid Background="Transparent">
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="PeeStates">
 									<VisualStateGroup.Transitions>
