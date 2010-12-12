@@ -7,8 +7,9 @@
 	xmlns:local="clr-namespace:HoldItCore"
 	xmlns:peeps="clr-namespace:HoldItCore.People">
 
-
 	<Style TargetType="local:Level">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="/HoldItCore;component/Fonts/Fonts.zip#valium" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Level">
@@ -86,23 +87,22 @@
 								<VisualState x:Name="Completed"/>
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
-						<ContentPresenter/>
-						<Grid>
-							<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-							<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-							<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-						</Grid>
-						<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom"  IsHitTestVisible="false">
-							<Grid x:Name="AlertPanel"/>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="Score: " FontSize="32" FontFamily="/HoldItCore;component/Fonts/Fonts.zip#valium"/>
-								<TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32" FontFamily="/HoldItCore;component/Fonts/Fonts.zip#valium"/>
-							</StackPanel>
-						</StackPanel>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="false">
-							<TextBlock Text="Accidents: " FontSize="32" FontFamily="/HoldItCore;component/Fonts/Fonts.zip#valium"/>
-							<TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32" FontFamily="/HoldItCore;component/Fonts/Fonts.zip#valium"/>
-						</StackPanel>
+                        <ContentPresenter/>
+                        <Grid>
+                            <TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+                            <TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+                            <TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+                        </Grid>
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top"  IsHitTestVisible="false" Margin="15,20,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Score: " FontSize="32" />
+                                <TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="false" Margin="0,20,15,0">
+                            <TextBlock Text="Accidents: " FontSize="32" />
+                            <TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32" />
+                        </StackPanel>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
@@ -118,6 +118,7 @@
 					<Grid>
 						<Border BorderBrush="#FF787878" BorderThickness="20" CornerRadius="20" Margin="0,34,0,0" Background="#FFD2D2D2"/>
 						<Border BorderBrush="#FF787878" BorderThickness="20" Width="40" Height="40" VerticalAlignment="Top"/>
+                        <Grid x:Name="AlertPanel"/>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
@@ -191,7 +192,7 @@
 								<Rectangle Stroke="Black"/>
 							</Grid>
 							<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50"/>
-							<Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
 								<Grid Height="200" Canvas.Top="-200" Width="150" Canvas.Left="49">
 									<local:SpeechBubble x:Name="speechBubble" Content="{TemplateBinding SpeechText}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="24" Visibility="Collapsed"/>
 								</Grid>

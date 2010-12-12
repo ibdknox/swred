@@ -15,6 +15,11 @@ namespace HoldItCore {
 			InitializeComponent();
 
 			this.levels.Add(new LevelInfo() {
+				LevelType = typeof(InteriorDesign),
+				Title = "Interior Design",
+			});
+
+			this.levels.Add(new LevelInfo() {
 				LevelType = typeof(Easy),
 				Title = "Easy",
 			});

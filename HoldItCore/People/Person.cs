@@ -112,6 +112,9 @@ namespace HoldItCore.People {
 			this.stall = stall;
 
 			Point stallPosition = stall.TransformToVisual((FrameworkElement)this.Parent).Transform(new Point(0, 0));
+			stallPosition.X += stall.ActualWidth / 2 - this.ActualWidth / 2;
+			stallPosition.Y += 30;
+
 			Storyboard sb = this.AnimateTo(stallPosition);
 
 			this.Level.RemoveFromLine(this);
@@ -195,6 +198,7 @@ namespace HoldItCore.People {
 
 			return sb;
 		}
+
 		
 
 		protected virtual void OnEnteredStall() {
@@ -210,7 +214,9 @@ namespace HoldItCore.People {
 
 		protected virtual void LeaveStall() {
 			this.State = PersonState.Exiting;
-			this.Level.ModifyScore((int)(this.MaxPeeAmount * 100), "Finished!");
+			int peeValue = (int)(this.MaxPeeAmount * 100);
+			this.Level.AdjustScore(peeValue);
+			this.stall.Alert(peeValue, "Finished!");
 			Storyboard sb = this.AnimateTo(this.exitPoint);
 			this.stall.PersonLeft();
 			sb.Completed += this.HandleExitCompleted;

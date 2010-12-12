@@ -271,5 +271,6 @@
 	<Grid x:Name="LayoutRoot" Background="White">
 		<HoldItCore_People:Person VerticalAlignment="Bottom" d:LayoutOverrides="Height" Margin="227,0,288,35" Style="{StaticResource SpeechPerson}" SpeechText="I need to pee!"/>
 		<HoldItCore_Levels:Easy Style="{StaticResource EasyStyle1}"/>
+		<TextBlock Height="25" Margin="370,0,306,90" TextWrapping="Wrap" Text="wooot" VerticalAlignment="Bottom" FontFamily="/HoldItCore;component/Fonts/Fonts.zip#valium"/>
 	</Grid>
 </UserControl>

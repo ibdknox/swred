@@ -23,7 +23,7 @@ namespace HoldItCore {
 		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
-		private Panel alertPanel;
+		
 
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
@@ -49,7 +49,7 @@ namespace HoldItCore {
 			}
 
 			this.peopleCanvas = (Panel)content.FindName("People");
-			this.alertPanel = (Panel)this.GetTemplateChild("AlertPanel");
+			
 
 			if (!DesignerProperties.IsInDesignTool)
 				this.State = LevelState.Intro;
@@ -127,7 +127,10 @@ namespace HoldItCore {
 				penalties -= 15;
 
 			if (penalties != 0)
-				this.ModifyScore(penalties, "Too close!");
+			{	
+				this.stalls[stallIndex].Alert(penalties, "Too close!");
+				this.AdjustScore(penalties);
+			}
 		}
 
 		protected virtual void Start() {
@@ -152,18 +155,9 @@ namespace HoldItCore {
 				this.selection = null;
 		}
 
-		/// <summary>
-		/// Modify the score with the given value (may be negative, for negative points)
-		/// </summary>
-		public void ModifyScore(int incrementValue, string reason)
+		public void AdjustScore(int change)
 		{
-			ScoreAlert alert = new ScoreAlert();
-			this.alertPanel.Children.Add(alert);
-
-			alert.Alert = incrementValue;
-			alert.Description = reason;
-
-			Score = Score + incrementValue;
+			Score += change;
 		}
 
 		public void AccidentHappened()
