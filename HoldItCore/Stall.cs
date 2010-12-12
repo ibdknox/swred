@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Diagnostics;
 using HoldItCore.People;
+using System.Collections.Generic;
 
 namespace HoldItCore {
 
@@ -31,11 +32,13 @@ namespace HoldItCore {
 
 		public void Alert(int incrementValue, string reason)
 		{
+			/*
 			ScoreAlert alert = new ScoreAlert();
 			this.alertPanel.Children.Add(alert);
 
 			alert.Alert = incrementValue;
 			alert.Description = reason;
+			 */
 		}
 
 		public void PersonEntering(Person person) {
@@ -47,6 +50,14 @@ namespace HoldItCore {
 
 		public void PersonLeft() {
 			this.Person = null;
+		}
+
+		public int OccupiedNeighborCount {
+			get { return this.Level.GetNeighborCount(this); }
+		}
+
+		public IEnumerable<Stall> Neighbors {
+			get { return this.Level.GetNeighbors(this); }
 		}
 
 		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {

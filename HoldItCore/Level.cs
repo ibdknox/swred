@@ -18,6 +18,12 @@ namespace HoldItCore {
 
 	public class Level : ContentControl {
 
+		public static List<string> LevelNames = new List<string>()
+		{
+			"Easy",
+			"Intro"
+		};
+
 		private List<Stall> stalls = new List<Stall>();
 
 		private List<Person> waitingLine = new List<Person>();
@@ -110,27 +116,42 @@ namespace HoldItCore {
 		public void SendPersonTo(Stall stall) {
 			if (this.selection != null) {
 
-				this.selection.GoToStall(stall);
-				this.Deselect(this.selection);
+				if (this.selection.CanUseStall(stall)) {
 
-				this.UpdateWaitingLine();
+					this.selection.GoToStall(stall);
+					this.Deselect(this.selection);
+
+					this.UpdateWaitingLine();
+				}
 			}
 		}
 
 		public void ScoreStallChoice(Stall stall) {
-			int stallIndex = this.stalls.IndexOf(stall);
-
-			int penalties = 0;
-			if (stallIndex > 0 && this.stalls[stallIndex - 1].Person != null)
-				penalties -= 15;
-			if (stallIndex < this.stalls.Count - 1 && this.stalls[stallIndex + 1].Person != null)
-				penalties -= 15;
-
-			if (penalties != 0)
-			{	
-				this.stalls[stallIndex].Alert(penalties, "Too close!");
-				this.AdjustScore(penalties);
+			int neighbors = this.GetNeighborCount(stall);
+			if (neighbors > 0)
+			{
+				this.AdjustScore(neighbors * (-15));
+				stall.Alert(neighbors * (-15), "Too close!");
 			}
+		}
+
+		public int GetNeighborCount(Stall stall) {
+			int stallIndex = this.stalls.IndexOf(stall);
+			int neighbors = 0;
+			if (stallIndex > 0 && this.stalls[stallIndex - 1].Person != null)
+				++neighbors;
+			if (stallIndex < this.stalls.Count - 1 && this.stalls[stallIndex + 1].Person != null)
+				++neighbors;
+
+			return neighbors;
+		}
+
+		public IEnumerable<Stall> GetNeighbors(Stall stall) {
+			int stallIndex = this.stalls.IndexOf(stall);
+			if (stallIndex > 0)
+				yield return this.stalls[stallIndex - 1];
+			if (stallIndex < this.stalls.Count - 1)
+				yield return this.stalls[stallIndex + 1];
 		}
 
 		protected virtual void Start() {

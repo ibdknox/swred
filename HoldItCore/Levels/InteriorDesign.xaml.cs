@@ -3,6 +3,7 @@
 using System.Windows.Threading;
 using System;
 using HoldItCore.People;
+using System.Windows.Controls;
 
 namespace HoldItCore.Levels {
 	public partial class InteriorDesign : Level {
@@ -24,7 +25,7 @@ namespace HoldItCore.Levels {
 
 			this.timer.Start();
 
-			this.AddPerson(new Person());
+			this.Spawn();
 		}
 
 		protected override void Stop() {
@@ -34,8 +35,14 @@ namespace HoldItCore.Levels {
 		}
 
 		private void HandleTick(object sender, EventArgs e) {
+			this.Spawn();
+		}
+
+		private void Spawn() {
 			double val = rng.NextDouble();
-			if (val <= .5)
+			if (val <= .2)
+				this.AddPerson(new Nerves());
+			else if (val < .5)
 				this.AddPerson(new OldMan());
 			else
 				this.AddPerson(new Person());

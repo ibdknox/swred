@@ -20,7 +20,7 @@ namespace HoldItCore.People {
 		Exiting,
 	}
 
-	public class Person : Control {
+	public class Person : ContentControl {
 
 		private Point lineStart = new Point(35, 350);
 		private Point exitPoint = new Point(-100, 500);
@@ -55,6 +55,8 @@ namespace HoldItCore.People {
 
 			VisualStateGroup textStates = (VisualStateGroup)this.GetTemplateChild("TextStates");
 			textStates.CurrentStateChanged += this.HandleTextStatesChanged;
+
+			VisualStateManager.GoToState(this, "Forwards", true);
 		}
 
 		public Level Level { get; set; }
@@ -101,8 +103,10 @@ namespace HoldItCore.People {
 
 				this.State = PersonState.InLine;
 			}
+		}
 
-			
+		public virtual bool CanUseStall(Stall stall) {
+			return true;
 		}
 
 		public void GoToStall(Stall stall) {
@@ -120,6 +124,8 @@ namespace HoldItCore.People {
 			this.Level.RemoveFromLine(this);
 
 			sb.Completed += this.HandleGoToStallAnimationCompleted;
+
+			VisualStateManager.GoToState(this, "Backwards", true);
 		}
 
 		private void HandleGoToStallAnimationCompleted(object sender, EventArgs e) {
@@ -156,11 +162,13 @@ namespace HoldItCore.People {
 
 			Storyboard exitingAnimation = this.AnimateTo(this.exitPoint);
 			exitingAnimation.Completed += this.HandleExitCompleted;
+
+			VisualStateManager.GoToState(this, "Forwards", true);
 		}
 
 		private double MaxPeeAmount { get; set; }
 
-		private void StartPeeing() {
+		protected void StartPeeing() {
             var stopSound = SoundManager.Play(SoundIndex.peeing, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
@@ -173,6 +181,11 @@ namespace HoldItCore.People {
 			};
 		}
 
+		protected void StopPeeing() {
+			double scale = this.CurrentBladderFill;
+			this.bladderEmptyAnimation.Stop();
+			this.peeScaleTransform.ScaleX = scale;
+		}
 
 		private void HandleBladderEmptyAnimationCompleted() {
 			if (this.stall != null)
@@ -210,6 +223,16 @@ namespace HoldItCore.People {
 
 			this.stall.PersonEntered();
 			this.StartPeeing();
+
+			foreach (Stall stall in this.stall.Neighbors)
+				if (stall.Person != null)
+					stall.Person.OnNeighborEnteredStall();
+		}
+
+		protected virtual void OnNeighborEnteredStall() {
+		}
+
+		protected virtual void OnNeighborLeftStall() {
 		}
 
 		protected virtual void LeaveStall() {
@@ -220,6 +243,12 @@ namespace HoldItCore.People {
 			Storyboard sb = this.AnimateTo(this.exitPoint);
 			this.stall.PersonLeft();
 			sb.Completed += this.HandleExitCompleted;
+
+			foreach (Stall stall in this.stall.Neighbors)
+				if (stall.Person != null)
+					stall.Person.OnNeighborLeftStall();
+
+			VisualStateManager.GoToState(this, "Forwards", true);
 		}
 
 		private void HandleExitCompleted(object sender, EventArgs e) {
@@ -292,8 +321,6 @@ namespace HoldItCore.People {
 				VisualStateManager.GoToState(this, "Deselected", true);
 		}
 
-
-
 		public static readonly DependencyProperty SpeechTextProperty = DependencyProperty.Register("SpeechText", typeof(string), typeof(Person), new PropertyMetadata(default(string), Person.HandleSpeechTextChanged));
 		public string SpeechText {
 			get { return (string)this.GetValue(Person.SpeechTextProperty); }
@@ -312,5 +339,33 @@ namespace HoldItCore.People {
 			if (e.NewState.Name == "Visible")
 				VisualStateManager.GoToState(this, "Hidden", true);
 		}
+
+		public static readonly DependencyProperty PeeMeterSizeProperty = DependencyProperty.Register("PeeMeterSize", typeof(double), typeof(Person), new PropertyMetadata(50d));
+		public double PeeMeterSize {
+			get { return (double)this.GetValue(Person.PeeMeterSizeProperty); }
+			set { this.SetValue(Person.PeeMeterSizeProperty, value); }
+		}
+
+		public static readonly DependencyProperty FrontImageProperty = DependencyProperty.Register("FrontImage", typeof(ImageSource), typeof(Person), new PropertyMetadata(default(ImageSource)));
+		public ImageSource FrontImage {
+			get { return (ImageSource)this.GetValue(Person.FrontImageProperty); }
+			set { this.SetValue(Person.FrontImageProperty, value); }
+		}
+
+		public static readonly DependencyProperty BackImageProperty = DependencyProperty.Register("BackImage", typeof(ImageSource), typeof(Person), new PropertyMetadata(default(ImageSource)));
+		public ImageSource BackImage {
+			get { return (ImageSource)this.GetValue(Person.BackImageProperty); }
+			set { this.SetValue(Person.BackImageProperty, value); }
+		}
+
+		public static readonly DependencyProperty SelectedImageProperty = DependencyProperty.Register("SelectedImage", typeof(ImageSource), typeof(Person), new PropertyMetadata(default(ImageSource)));
+		public ImageSource SelectedImage {
+			get { return (ImageSource)this.GetValue(Person.SelectedImageProperty); }
+			set { this.SetValue(Person.SelectedImageProperty, value); }
+		}
+
+		
+
+		
 	}
 }

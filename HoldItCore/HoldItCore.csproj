@@ -74,6 +74,7 @@
     <Compile Include="Levels\IntroLevel.xaml.cs">
       <DependentUpon>IntroLevel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="People\Nerves.cs" />
     <Compile Include="People\OldMan.cs" />
     <Compile Include="People\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +141,28 @@
     </BlendEmbeddedFont>
     <Resource Include="Levels\UrinalLeftScreen.png" />
     <Resource Include="Levels\WoodHex.png" />
+    <Resource Include="People\Looker behind No BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Looker No BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Old Man Behind No BG.png" />
+    <Resource Include="People\Old Man No BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Nervous Pee-er behind No BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Nervous Pee-er No BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Drunk Front Glow.png" />
+    <Resource Include="People\Looker Front Glow.png" />
+    <Resource Include="People\matre d Front Glow.png" />
+    <Resource Include="People\Nervous Pee-er Glow.png" />
+    <Resource Include="People\Old Man Front Glow.png" />
+    <Resource Include="People\Phone Guy Front Glow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
