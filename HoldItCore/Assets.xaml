@@ -1,0 +1,115 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:HoldItCore" xmlns:HoldItCore_People="clr-namespace:HoldItCore.People"
+	mc:Ignorable="d"
+	x:Class="HoldItCore.Assets"
+	d:DesignWidth="640" d:DesignHeight="480">
+	<UserControl.Resources>
+
+		<Style x:Key="SpeechBubbleStyle1" TargetType="local:SpeechBubble">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="local:SpeechBubble">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition Height="20"/>
+							</Grid.RowDefinitions>
+							<Rectangle Fill="#FFF4F4F5" Stroke="Black" RadiusX="13" RadiusY="13" Margin="0,0,0,-1.347"/>
+							<Path Data="M14,79 L12,98 L30.809013,78.995705" Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="11.5,-0.5,0,0" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="19.809" Grid.Row="1"/>
+							<TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" Margin="7,5"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Width" Value="150"/>
+		</Style>
+		<Style x:Key="SpeechPerson" TargetType="HoldItCore_People:Person">
+			<Setter Property="Height" Value="152"/>
+			<Setter Property="Width" Value="125"/>
+			<Setter Property="Background" Value="#FF85BFFF"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="HoldItCore_People:Person">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="PeeStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:1" To="PeedPants"/>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Waiting"/>
+									<VisualState x:Name="PeedPants">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FFFDFF00" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Deselected"/>
+									<VisualState x:Name="Selected">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FFFF7839" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="ellipse1" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="#FFFFA47A" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="TextStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0" To="Visible">
+											<Storyboard>
+												<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="speechBubble">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+													<DiscreteObjectKeyFrame KeyTime="0:0:1">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Collapsed</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="speechBubble">
+													<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Visible"/>
+									<VisualState x:Name="Hidden"/>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Grid Margin="38,0,37,0" Opacity="0.5">
+								<Border x:Name="border" BorderThickness="1" Background="{TemplateBinding Background}" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
+								<Ellipse x:Name="ellipse1" Fill="{TemplateBinding Background}" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
+							</Grid>
+							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
+								<Rectangle Fill="#F4454545" Stroke="Black"/>
+								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
+								<Rectangle Stroke="Black"/>
+							</Grid>
+							<Ellipse x:Name="ellipse" Fill="#00FDFF00" Margin="0,67,0,18" Width="50" Height="50"/>
+							<Canvas Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+								<Grid Height="200" Canvas.Top="-200" Width="150" Canvas.Left="49">
+									<local:SpeechBubble x:Name="speechBubble" Content="{TemplateBinding SpeechText}"  VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="24" Visibility="Collapsed"/>
+								</Grid>
+							</Canvas>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<local:Urinal HorizontalAlignment="Right" d:LayoutOverrides="Width, Height" Margin="0,33,47,0" VerticalAlignment="Top"/>
+		<HoldItCore_People:OldMan HorizontalAlignment="Left" VerticalAlignment="Bottom" d:LayoutOverrides="Width, Height" Margin="8,0,0,61"/>
+		<HoldItCore_People:Person VerticalAlignment="Bottom" d:LayoutOverrides="Height" Margin="227,0,288,35" Style="{StaticResource SpeechPerson}" SpeechText="I need to pee!"/>
+		<local:SpeechBubble Content="This is a long piece of text." Margin="0,141,427,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="24"/>
+	</Grid>
+</UserControl>

@@ -52,6 +52,9 @@ namespace HoldItCore.People {
 			// Stop the animations at design-time.
 			if (!DesignerProperties.IsInDesignTool)
 				this.StartBladderFilling();
+
+			VisualStateGroup textStates = (VisualStateGroup)this.GetTemplateChild("TextStates");
+			textStates.CurrentStateChanged += this.HandleTextStatesChanged;
 		}
 
 		public Level Level { get; set; }
@@ -180,6 +183,8 @@ namespace HoldItCore.People {
 		protected virtual void OnEnteredStall() {
 			this.State = PersonState.InStall;
 
+			this.SpeechText = "Aaahhh!!!";
+
 			this.stall.PersonEntered();
 			this.StartPeeing();
 		}
@@ -260,6 +265,25 @@ namespace HoldItCore.People {
 				VisualStateManager.GoToState(this, "Deselected", true);
 		}
 
-		
+
+
+		public static readonly DependencyProperty SpeechTextProperty = DependencyProperty.Register("SpeechText", typeof(string), typeof(Person), new PropertyMetadata(default(string), Person.HandleSpeechTextChanged));
+		public string SpeechText {
+			get { return (string)this.GetValue(Person.SpeechTextProperty); }
+			set { this.SetValue(Person.SpeechTextProperty, value); }
+		}
+
+		private static void HandleSpeechTextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
+			((Person)sender).OnSpeechTextChanged(e);
+		}
+
+		protected virtual void OnSpeechTextChanged(DependencyPropertyChangedEventArgs e) {
+			VisualStateManager.GoToState(this, "Visible", true);
+		}
+
+		private void HandleTextStatesChanged(object sender, VisualStateChangedEventArgs e) {
+			if (e.NewState.Name == "Visible")
+				VisualStateManager.GoToState(this, "Hidden", true);
+		}
 	}
 }
