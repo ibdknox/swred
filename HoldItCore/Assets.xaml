@@ -9,6 +9,21 @@
 	x:Class="HoldItCore.Assets"
 	d:DesignWidth="640" d:DesignHeight="480" Width="800">
 	<UserControl.Resources>
+
+		<Style x:Key="UrinalStyle1" TargetType="local:Urinal">
+			<Setter Property="Height" Value="220"/>
+			<Setter Property="Width" Value="198"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="local:Urinal">
+						<Canvas>
+							<Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+							<Canvas x:Name="AlertPanel" Height="0" Width="0" Margin="57,-50,0,0"/>
+						</Canvas>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 		
 	</UserControl.Resources>
 
@@ -16,5 +31,8 @@
 		<HoldItCore_People:Person VerticalAlignment="Bottom" d:LayoutOverrides="Height" Margin="227,0,288,35" SpeechText="I need to pee!"/>
 		<HoldItCore_Levels:Easy />
 		<HoldItCore_People:Person Content="Person" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:LayoutOverrides="Width, Height" Margin="226,0,0,77" />
+		<local:Urinal HorizontalAlignment="Left" d:LayoutOverrides="Width" Margin="48,208,0,52" Style="{StaticResource UrinalStyle1}"/>
+		<Grid Height="147" Margin="197,72,342,0" VerticalAlignment="Top"/>
+		<local:ScoreAlert HorizontalAlignment="Left" VerticalAlignment="Top" Alert="+300" Description="Finished!"/>
 	</Grid>
 </UserControl>

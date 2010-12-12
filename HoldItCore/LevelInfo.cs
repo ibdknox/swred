@@ -8,6 +8,13 @@ namespace HoldItCore {
 		public static List<LevelInfo> AllLevels = new List<LevelInfo>();
 
 		static LevelInfo() {
+			
+			LevelInfo.AllLevels.Add(new LevelInfo() {
+				LevelType = typeof(Easy),
+				Title = "Potty Training",
+				Description = "Everyone has to start somewhere",
+			});
+
 			LevelInfo.AllLevels.Add(new LevelInfo() {
 				LevelType = typeof(InteriorDesign),
 				Title = "Interior Design",
@@ -15,15 +22,15 @@ namespace HoldItCore {
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(Easy),
-				Title = "Easy",
-				Description = "Just getting started.",
+				LevelType = typeof(IntroLevel),
+				Title = "Super Bowls",
+				Description = "Welcome to the big leagues",
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
 				LevelType = typeof(IntroLevel),
-				Title = "Intro",
-				Description = "Never going to get out of here!",
+				Title = "Urine Nation",
+				Description = "",
 			});
 		}
 
