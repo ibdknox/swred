@@ -65,6 +65,9 @@
       <DependentUpon>LevelContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="LevelInfo.cs" />
+    <Compile Include="Levels\InteriorDesign.xaml.cs">
+      <DependentUpon>InteriorDesign.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Levels\Easy.xaml.cs">
       <DependentUpon>Easy.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
     <Page Include="LevelContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Levels\InteriorDesign.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Levels\Easy.xaml">
       <Generator>MSBuild:Compile</Generator>

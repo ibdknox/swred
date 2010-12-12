@@ -128,7 +128,7 @@ namespace HoldItCore.People {
 
 		public void StartBladderFilling() {
 			this.peeScaleTransform.ScaleX = this.InitialBladderFill;
-			this.bladderFillAnimation = this.AnimatePeeTo(1, this.BladderFillRate);
+			this.bladderFillAnimation = this.AnimatePeeTo(1, this.BladderFillRate, .5);
 
 			this.bladderFillAnimation.Completed += this.HandleBladderFillAnimationCompleted;
 		}
@@ -176,13 +176,14 @@ namespace HoldItCore.People {
 				this.LeaveStall();
 		}
 
-		private Storyboard AnimatePeeTo(double percent, double rate) {
+		private Storyboard AnimatePeeTo(double percent, double rate, double delay = 0) {
 			double startScale = this.peeScaleTransform.ScaleX;
 
 			DoubleAnimation animation = new DoubleAnimation() {
 				To = percent,
 				From = startScale,
 				Duration = TimeSpan.FromSeconds(Math.Abs(percent - startScale) / rate),
+				BeginTime = TimeSpan.FromSeconds(delay),
 			};
 			Storyboard.SetTargetProperty(animation, new PropertyPath(ScaleTransform.ScaleXProperty));
 
