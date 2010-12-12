@@ -42,6 +42,7 @@ namespace HoldIt
 				try
 				{
 					soundInstance.Stop();
+					soundInstance.Dispose();
 				} catch(ArgumentException e) 
 				{
 					Debug.WriteLine("Weird sound issue");
