@@ -5,12 +5,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:core="clr-namespace:HoldItCore;assembly=HoldItCore"
     xmlns:HoldItCore_Levels="clr-namespace:HoldItCore.Levels;assembly=HoldItCore" 
+	xmlns:HoldItCore_People="clr-namespace:HoldItCore.People;assembly=HoldItCore" 
 	x:Class="HoldItDesktop.MainPage"
     mc:Ignorable="d"
-    d:DesignHeight="724" d:DesignWidth="835" Width="Auto" Height="Auto">
-	<UserControl.Resources>
-
-	</UserControl.Resources>
+    d:DesignHeight="724" d:DesignWidth="835">
 
     <Grid x:Name="LayoutRoot" Background="#FF858585">
     	<Grid HorizontalAlignment="Center" Height="480" VerticalAlignment="Center" Width="800">

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Diagnostics;
 using System.ComponentModel;
 using System;
+using HoldItCore.People;
 
 namespace HoldItCore {
 

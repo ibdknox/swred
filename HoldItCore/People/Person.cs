@@ -8,7 +8,7 @@ using System;
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace HoldItCore {
+namespace HoldItCore.People {
 
 	public enum PersonState {
 		Unset,
@@ -35,10 +35,12 @@ namespace HoldItCore {
 
 			this.RenderTransform = translation;
 
-			this.InitialBladderFill = .2;
-			this.BladderFillRate = .1;
-			this.PeeRate = .2;
+			this.InitialBladderFill = .2 + Utils.RNG.NextDouble() * .2;
+			this.BladderFillRate = .1 + Utils.RNG.NextDouble() * .1;
+			this.PeeRate = .05 + Utils.RNG.NextDouble() * .1;
 			this.State = PersonState.Unset;
+
+			this.WalkSpeed = 400;
 		}
 
 		public override void OnApplyTemplate() {
@@ -69,6 +71,12 @@ namespace HoldItCore {
 		/// </summary>
 		public double PeeRate { get; set; }
 
+
+		/// <summary>
+		/// Speed that the person walks.
+		/// </summary>
+		public double WalkSpeed { get; set; }
+
 		/// <summary>
 		/// For debugging.
 		/// </summary>
@@ -81,7 +89,7 @@ namespace HoldItCore {
 				this.AnimateTo(position);
 			else {
 				this.MoveTo(this.enterPoint);
-				this.AnimateTo(position, 400);
+				this.AnimateTo(position, this.WalkSpeed);
 
 				this.State = PersonState.InLine;
 			}
@@ -194,7 +202,7 @@ namespace HoldItCore {
 		}
 
 		private Storyboard AnimateTo(Point point) {
-			return this.AnimateTo(point, 400);
+			return this.AnimateTo(point, this.WalkSpeed);
 		}
 
 		private Storyboard AnimateTo(Point point, double rate) {
