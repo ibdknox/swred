@@ -74,6 +74,8 @@
     <Compile Include="People\OldMan.cs" />
     <Compile Include="People\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sounds\ISoundPlayer.cs" />
+    <Compile Include="Sounds\SoundManager.cs" />
     <Compile Include="Sounds\SoundIndex.cs" />
     <Compile Include="SpeechBubble.cs" />
     <Compile Include="Stall.cs" />

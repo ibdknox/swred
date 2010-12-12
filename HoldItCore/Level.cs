@@ -146,15 +146,6 @@ namespace HoldItCore {
 		public void ModifyScore(int incrementValue, string reason)
 		{
 			Score = Score + incrementValue;
-
-			ScoreModification modification = new ScoreModification()
-			{
-				ModificationType = incrementValue > 0 ? ModificationType.Positive : ModificationType.Negative,
-				AbsoluteValue = Math.Abs(incrementValue),
-				Reason = reason
-			};
-
-			LastScoreModification = modification;
 		}
 
 		public void AccidentHappened()
