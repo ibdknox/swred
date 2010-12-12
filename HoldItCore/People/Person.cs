@@ -31,6 +31,12 @@ namespace HoldItCore.People {
 		private Storyboard bladderFillAnimation = new Storyboard();
 		private Storyboard bladderEmptyAnimation = new Storyboard();
 
+		protected Randomizer waitingMessages = new Randomizer();
+		protected Randomizer headingToStallMessages = new Randomizer();
+		protected Randomizer enteredStallMessages = new Randomizer();
+		protected Randomizer bladderEmptyMessages = new Randomizer();
+		protected Randomizer peedMessages = new Randomizer();
+
 		public Person() {
 			this.DefaultStyleKey = typeof(Person);
 
@@ -108,6 +114,7 @@ namespace HoldItCore.People {
 		}
 
 		protected virtual void OnWait() {
+			this.waitingMessages.DoSomething();
 		}
 
 		public virtual bool CanUseStall(Stall stall) {
@@ -136,6 +143,7 @@ namespace HoldItCore.People {
 		}
 
 		protected virtual void OnHeadingToStall() {
+			this.headingToStallMessages.DoSomething();
 		}
 
 		private void HandleGoToStallAnimationCompleted(object sender, EventArgs e) {
@@ -178,6 +186,8 @@ namespace HoldItCore.People {
 			exitingAnimation.Completed += this.HandleExitCompleted;
 
 			VisualStateManager.GoToState(this, "Forwards", true);
+
+			this.peedMessages.DoSomething();
 		}
 
 		private double MaxPeeAmount { get; set; }
@@ -208,6 +218,8 @@ namespace HoldItCore.People {
 		protected virtual void OnBladderEmpty() {
 			if (this.stall != null)
 				this.LeaveStall();
+
+			this.bladderEmptyMessages.DoSomething();
 		}
 
 		private Storyboard AnimatePeeTo(double percent, double rate, double delay = 0) {
@@ -245,6 +257,8 @@ namespace HoldItCore.People {
 			foreach (Stall stall in this.stall.Neighbors)
 				if (stall.Person != null)
 					stall.Person.OnNeighborEnteredStall();
+
+			this.enteredStallMessages.DoSomething();
 		}
 
 		protected virtual void OnNeighborEnteredStall() {
