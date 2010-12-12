@@ -2,34 +2,50 @@
 namespace HoldItCore.People {
 	public class Normal: Person {
 
-		private Randomizer waitingMessage = new Randomizer();
-		private Randomizer headingToStallMessages = new Randomizer();
-		private Randomizer enteredStallMessages = new Randomizer();
-		private Randomizer bladderEmptyMessages = new Randomizer();
 
 		public Normal() {
-		}
+			this.waitingMessages.Add(.1, delegate {
+				this.Say("Hurry up.");
+			});
 
-		protected override void OnWait() {
-			base.OnWait();
-		}
+			this.waitingMessages.Add(.1, delegate {
+				this.Say("It's crazy in here.");
+			});
 
-		protected override void OnHeadingToStall() {
-			base.OnHeadingToStall();
+			this.waitingMessages.Add(.1, delegate {
+				this.Say("Get off my lawn.");
+			});
 
-			this.headingToStallMessages.DoSomething();
-		}
+			this.headingToStallMessages.Add(.3, delegate {
+				this.Say("'Scuze me.");
+			});
 
-		protected override void OnEnteredStall() {
-			base.OnEnteredStall();
 
-			this.enteredStallMessages.DoSomething();
-		}
+			this.enteredStallMessages.Add(.3, delegate {
+				this.Say("Finally.");
+			});
+			this.enteredStallMessages.Add(.3, delegate {
+				this.Say("That was close.");
+			});
 
-		protected override void OnBladderEmpty() {
-			base.OnBladderEmpty();
 
-			this.bladderEmptyMessages.DoSomething();
+
+			this.bladderEmptyMessages.Add(.5, delegate {
+				this.Say("Thanks.");
+			});
+
+
+			this.peedMessages.Add(.4, delegate {
+				this.Say("Crap!");
+			});
+
+			this.peedMessages.Add(.4, delegate {
+				this.Say("Oh well.");
+			});
+
+			this.peedMessages.Add(.2, delegate {
+				this.Say("It was the sink.");
+			});
 		}
 
 		protected override void OnPeedPants() {
