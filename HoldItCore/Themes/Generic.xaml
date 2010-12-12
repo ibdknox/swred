@@ -122,8 +122,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Urinal">
                     <Canvas>
-                        <Grid x:Name="AlertPanel"/>
-                        <Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+						<Image Source="/HoldItCore;component/Levels/UrinalLeftScreen.png" Stretch="Fill" Height="220" Width="198"/>
+						<Canvas x:Name="AlertPanel" Height="0" Width="0" Margin="57,-50,0,0"/>
                     </Canvas>
                 </ControlTemplate>
             </Setter.Value>

@@ -149,7 +149,7 @@ namespace HoldItCore {
 			if (neighbors > 0)
 			{
 				this.AdjustScore(neighbors * (-15));
-				stall.Alert(neighbors * (-15), "Too close!");
+				stall.Alert(neighbors * (-15), "Pee foul!");
 			}
 		}
 
