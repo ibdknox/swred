@@ -11,22 +11,39 @@ using System.Windows.Shapes;
 using Microsoft.Xna.Framework.Audio;
 using System.IO;
 using System.Windows.Resources;
-using HoldItCore;
+using HoldItCore.Sounds;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 
-namespace HoldIt.Sounds
+namespace HoldIt
 {
-    public class SoundManager
+    public class XNASoundPlayer : ISoundPlayer
     {
-        public static void Play(string curSound, bool loop)
+
+        private Dictionary<String, SoundEffectInstance> _sounds;
+
+        public XNASoundPlayer()
         {
-            Stream sound = typeof(Level).Assembly.GetManifestResourceStream("HoldItCore.Sounds." + curSound);
+            _sounds = new Dictionary<string, SoundEffectInstance>();
+        }
+
+        public void Play(string curSound, bool loop)
+        {
+
+            if(_sounds.ContainsKey(curSound)) {
+                _sounds[curSound].Play();
+                return;
+            }
+
+            Stream sound = typeof(SoundManager).Assembly.GetManifestResourceStream("HoldItCore.Sounds." + curSound);
             SoundEffect effect = SoundEffect.FromStream(sound);
             SoundEffectInstance soundInstance = effect.CreateInstance();
             FrameworkDispatcher.Update();
             soundInstance.IsLooped = loop;
             soundInstance.Play();
+
+            _sounds.Add(curSound, soundInstance);
         }
     }
 }

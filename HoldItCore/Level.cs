@@ -160,7 +160,6 @@ namespace HoldItCore {
 
 			alert.Alert = incrementValue;
 			alert.Description = reason;
-			
 
 			Score = Score + incrementValue;
 		}

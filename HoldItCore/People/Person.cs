@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using System;
 using System.Diagnostics;
 using System.ComponentModel;
+using HoldItCore.Sounds;
 
 namespace HoldItCore.People {
 
@@ -158,6 +159,7 @@ namespace HoldItCore.People {
 		private double MaxPeeAmount { get; set; }
 
 		private void StartPeeing() {
+            SoundManager.Play(SoundIndex.peeing, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
 			this.bladderFillAnimation.Stop();

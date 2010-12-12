@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using HoldItCore.Sounds;
 
 namespace HoldIt
 {
@@ -19,7 +20,7 @@ namespace HoldIt
         public MainPage()
         {
             InitializeComponent();
-
+            SoundManager.InitSoundSource(new XNASoundPlayer());
 
 			this.PlayButton.Click += this.Start;
         }
