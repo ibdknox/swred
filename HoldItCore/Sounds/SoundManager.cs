@@ -22,12 +22,12 @@ namespace HoldItCore.Sounds
             _player = player;
         }
 
-        public static void Play(string curSound, bool loop)
+        public static Action Play(string curSound, bool loop)
         {
             if (_player == null)
-                return;
+				return () => { };
 
-            _player.Play(curSound, loop);
+			return _player.Play(curSound, loop);
         }
     }
 }

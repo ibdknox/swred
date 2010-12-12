@@ -159,16 +159,19 @@ namespace HoldItCore.People {
 		private double MaxPeeAmount { get; set; }
 
 		private void StartPeeing() {
-            SoundManager.Play(SoundIndex.peeing, false);
+            var stopSound = SoundManager.Play(SoundIndex.peeing, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
 			this.bladderFillAnimation.Stop();
 			this.peeScaleTransform.ScaleX = scale;
 			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
-			this.bladderEmptyAnimation.Completed += this.HandleBladderEmptyAnimationCompleted;
+			this.bladderEmptyAnimation.Completed += (s, e) => {
+				stopSound();
+				this.HandleBladderEmptyAnimationCompleted(); 
+			};
 		}
 
-		private void HandleBladderEmptyAnimationCompleted(object sender, EventArgs e) {
+		private void HandleBladderEmptyAnimationCompleted() {
 			this.LeaveStall();
 		}
 

@@ -28,14 +28,8 @@ namespace HoldIt
             _sounds = new Dictionary<string, SoundEffectInstance>();
         }
 
-        public void Play(string curSound, bool loop)
+        public Action Play(string curSound, bool loop)
         {
-
-            if(_sounds.ContainsKey(curSound)) {
-                _sounds[curSound].Play();
-                return;
-            }
-
             Stream sound = typeof(SoundManager).Assembly.GetManifestResourceStream("HoldItCore.Sounds." + curSound);
             SoundEffect effect = SoundEffect.FromStream(sound);
             SoundEffectInstance soundInstance = effect.CreateInstance();
@@ -43,7 +37,12 @@ namespace HoldIt
             soundInstance.IsLooped = loop;
             soundInstance.Play();
 
-            _sounds.Add(curSound, soundInstance);
+			return () => {
+				if (soundInstance.IsDisposed)
+				{
+					soundInstance.Stop();
+				}
+			};
         }
     }
 }
