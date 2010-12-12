@@ -13,6 +13,12 @@ namespace HoldItCore
 {
 	public class SettingsStore
 	{
+		static SettingsStore()
+        {
+            SettingsStore.MusicVolume = 80;
+            SettingsStore.EffectsVolume = 65;
+        }
+
 		public static int MusicVolume { get; set; }
 		public static int EffectsVolume { get; set; }
 	}
