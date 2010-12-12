@@ -64,6 +64,11 @@ namespace HoldItCore.People {
 		/// </summary>
 		public double InitialBladderFill { get; set; }
 
+		public double CurrentBladderFill
+		{
+			get { return this.peeScaleTransform.ScaleX; }
+		}
+
 		/// <summary>
 		/// Rate that the person's bladder fills, in percent per second
 		/// </summary>
@@ -132,6 +137,8 @@ namespace HoldItCore.People {
 
 			VisualStateManager.GoToState(this, "PeedPants", true);
 
+			this.Level.AccidentHappened();
+
 			if (this.stall != null) {
 				this.stall.PersonLeft();
 				this.stall = null;
@@ -148,8 +155,11 @@ namespace HoldItCore.People {
 			exitingAnimation.Completed += this.HandleExitCompleted;
 		}
 
+		private double MaxPeeAmount { get; set; }
+
 		private void StartPeeing() {
-			double scale = this.peeScaleTransform.ScaleX;
+			this.MaxPeeAmount = this.CurrentBladderFill;
+			double scale = this.CurrentBladderFill;
 			this.bladderFillAnimation.Stop();
 			this.peeScaleTransform.ScaleX = scale;
 			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
@@ -191,6 +201,7 @@ namespace HoldItCore.People {
 
 		protected virtual void LeaveStall() {
 			this.State = PersonState.Exiting;
+			this.Level.ModifyScore((int)(this.MaxPeeAmount * 100), "Finished!");
 			Storyboard sb = this.AnimateTo(this.exitPoint);
 			this.stall.PersonLeft();
 			sb.Completed += this.HandleExitCompleted;

@@ -4,11 +4,11 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-    xmlns:local="clr-namespace:HoldItCore"
+	xmlns:local="clr-namespace:HoldItCore"
 	xmlns:peeps="clr-namespace:HoldItCore.People">
 
 
-    <Style TargetType="local:Level">
+		<Style TargetType="local:Level">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Level">
@@ -91,6 +91,16 @@
 							<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
 							<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
 							<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+							<StackPanel Orientation="Vertical"  HorizontalAlignment="Right" VerticalAlignment="Top">
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="Score: " FontSize="32" />
+									<TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
+								</StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="Accidents: " FontSize="32" />
+									<TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
+								</StackPanel>
+							</StackPanel>
 						</Grid>
 					</Grid>
 				</ControlTemplate>
@@ -98,7 +108,7 @@
 		</Setter>
 	</Style>
 
-    <Style TargetType="local:Urinal">
+		<Style TargetType="local:Urinal">
 		<Setter Property="Height" Value="170"/>
 		<Setter Property="Width" Value="125"/>
 		<Setter Property="Template">
