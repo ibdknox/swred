@@ -20,15 +20,25 @@
         <controls:Pivot Title="Hold It!">
             <!--Pivot item one-->
             <controls:PivotItem Header="Instructions">
-
-            </controls:PivotItem>
+<StackPanel >
+                    <TextBlock TextWrapping="Wrap">
+                        To play Hold It! one must simply tap one of the "gentlemen" waiting in line and then one taps the facility to which one wishes them sent. Some interesting characters visit the W.C. so one is encouraged to visit the following descriptions.
+                    </TextBlock>
+                    <Grid Margin="10">
+                        <Image Margin="0,40,0,0" Source="/HoldItCore;component/People/matre d No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" OpacityMask="Black" />
+                        <TextBlock TextWrapping="Wrap" FontSize="18" FontStyle="Italic">
+Always go to the bathroom when you have a chance. – King George V
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>            </controls:PivotItem>
 
             <!--Pivot item two-->
             <controls:PivotItem Header="The Drunk">
                 <StackPanel >
                     <TextBlock TextWrapping="Wrap">
-The Kid may not be that tall but he knows how to work a toilet alright. The Kid isn’t that tall so make sure to send him to a Lowboy or a stall.
-
+                The Drunk doesn’t care where you want him to go.
+                He’s gotta go to the bathroom and he’s gonna go right away.
+                Just pray he doesn’t vomit in the sink.
                     </TextBlock>
                     <Grid Margin="10">
                         <Image Source="/HoldItCore;component/People/Drunk Front No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" OpacityMask="Black" />
@@ -43,9 +53,7 @@ The trouble is, I can't remember if it's the thirteenth or the fourteenth.
             <controls:PivotItem Header="The Kid">
                 <StackPanel>
                     <TextBlock TextWrapping="Wrap">
-                The Drunk doesn’t care where you want him to go.
-                He’s gotta go to the bathroom and he’s gonna go right away.
-                Just pray he doesn’t vomit in the sink.
+The Kid may not be that tall but he knows how to work a toilet alright. The Kid isn’t that tall so make sure to send him to a Lowboy or a stall.
                     </TextBlock>
                     <Grid Margin="10">
                         <Image Source="/HoldItCore;component/People/Kid Front No BG.png"  HorizontalAlignment="Right" Stretch="Fill" VerticalAlignment="Top" />
