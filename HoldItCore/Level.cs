@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System;
 using HoldItCore.People;
+using System.Net;
 
 namespace HoldItCore {
 
@@ -22,6 +23,7 @@ namespace HoldItCore {
 		private List<Person> waitingLine = new List<Person>();
 
 		private Panel peopleCanvas;
+		private Panel alertPanel;
 
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
@@ -45,6 +47,7 @@ namespace HoldItCore {
 			}
 
 			this.peopleCanvas = (Panel)content.FindName("People");
+			this.alertPanel = (Panel)this.GetTemplateChild("AlertPanel");
 
 			if (!DesignerProperties.IsInDesignTool)
 				this.State = LevelState.Intro;
@@ -82,6 +85,7 @@ namespace HoldItCore {
 			Debug.Assert(this.waitingLine.Contains(person));
 
 			this.waitingLine.Remove(person);
+			this.UpdateWaitingLine();
 		}
 
 		public void RemovePerson(Person person) {
@@ -104,18 +108,24 @@ namespace HoldItCore {
 		public void SendPersonTo(Stall stall) {
 			if (this.selection != null) {
 
-				int stallIndex = this.stalls.IndexOf(stall);
-
-				if (stallIndex > 0 && this.stalls[stallIndex - 1].Person != null)
-					this.ModifyScore(-15, "Too close!");
-				if (stallIndex < this.stalls.Count - 1 && this.stalls[stallIndex + 1].Person != null)
-					this.ModifyScore(-15, "Too close!");
-
 				this.selection.GoToStall(stall);
 				this.Deselect(this.selection);
 
 				this.UpdateWaitingLine();
 			}
+		}
+
+		public void ScoreStallChoice(Stall stall) {
+			int stallIndex = this.stalls.IndexOf(stall);
+
+			int penalties = 0;
+			if (stallIndex > 0 && this.stalls[stallIndex - 1].Person != null)
+				penalties -= 15;
+			if (stallIndex < this.stalls.Count - 1 && this.stalls[stallIndex + 1].Person != null)
+				penalties -= 15;
+
+			if (penalties != 0)
+				this.ModifyScore(penalties, "Too close!");
 		}
 
 		protected virtual void Start() {
@@ -145,16 +155,14 @@ namespace HoldItCore {
 		/// </summary>
 		public void ModifyScore(int incrementValue, string reason)
 		{
+			ScoreAlert alert = new ScoreAlert();
+			this.alertPanel.Children.Add(alert);
+
+			alert.Alert = incrementValue;
+			alert.Description = reason;
+			
+
 			Score = Score + incrementValue;
-
-			ScoreModification modification = new ScoreModification()
-			{
-				ModificationType = incrementValue > 0 ? ModificationType.Positive : ModificationType.Negative,
-				AbsoluteValue = Math.Abs(incrementValue),
-				Reason = reason
-			};
-
-			LastScoreModification = modification;
 		}
 
 		public void AccidentHappened()
@@ -184,5 +192,23 @@ namespace HoldItCore {
 				VisualStateManager.GoToState(this, this.State.ToString(), true);
 			}
 		}
+
+
+
+
+		public static readonly DependencyProperty ScoreIncrementProperty = DependencyProperty.Register("ScoreIncrement", typeof(double), typeof(Level), new PropertyMetadata(default(double)));
+		public double ScoreIncrement {
+			get { return (double)this.GetValue(Level.ScoreIncrementProperty); }
+			set { this.SetValue(Level.ScoreIncrementProperty, value); }
+		}
+
+		
+		public static readonly DependencyProperty ScoreReasonProperty = DependencyProperty.Register("ScoreReason", typeof(string), typeof(Level), new PropertyMetadata(default(string)));
+		public string ScoreReason {
+			get { return (string)this.GetValue(Level.ScoreReasonProperty); }
+			set { this.SetValue(Level.ScoreReasonProperty, value); }
+		}
+
+		
 	}
 }

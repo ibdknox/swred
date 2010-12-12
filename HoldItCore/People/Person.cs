@@ -167,7 +167,8 @@ namespace HoldItCore.People {
 		}
 
 		private void HandleBladderEmptyAnimationCompleted(object sender, EventArgs e) {
-			this.LeaveStall();
+			if (this.stall != null)
+				this.LeaveStall();
 		}
 
 		private Storyboard AnimatePeeTo(double percent, double rate) {
@@ -192,6 +193,8 @@ namespace HoldItCore.People {
 
 		protected virtual void OnEnteredStall() {
 			this.State = PersonState.InStall;
+
+			this.Level.ScoreStallChoice(this.stall);
 
 			this.SpeechText = "Aaahhh!!!";
 

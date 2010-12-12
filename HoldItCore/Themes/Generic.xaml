@@ -8,7 +8,7 @@
 	xmlns:peeps="clr-namespace:HoldItCore.People">
 
 
-		<Style TargetType="local:Level">
+	<Style TargetType="local:Level">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="local:Level">
@@ -91,17 +91,18 @@
 							<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
 							<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
 							<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
-							<StackPanel Orientation="Vertical"  HorizontalAlignment="Right" VerticalAlignment="Top">
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="Score: " FontSize="32" />
-									<TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="Accidents: " FontSize="32" />
-									<TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
-								</StackPanel>
-							</StackPanel>
 						</Grid>
+						<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" IsHitTestVisible="false">
+							<Grid x:Name="AlertPanel"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="Score: " FontSize="32" />
+								<TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
+							</StackPanel>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="false">
+							<TextBlock Text="Accidents: " FontSize="32"/>
+							<TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
+						</StackPanel>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
@@ -294,7 +295,7 @@
 								</TransformGroup>
 							</ContentControl.RenderTransform>
 						</ContentControl>
-						<TextBlock x:Name="textBlock" Margin="0,43,1,0" TextWrapping="Wrap" Text="{TemplateBinding Description}" d:LayoutOverrides="Width, Height" FontSize="24" Opacity="0"/>
+						<TextBlock x:Name="textBlock" Margin="0,43,1,0" TextWrapping="Wrap" Text="{TemplateBinding Description}" FontSize="24" Opacity="0"/>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>

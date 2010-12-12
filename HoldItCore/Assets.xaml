@@ -4,9 +4,10 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:HoldItCore" xmlns:HoldItCore_People="clr-namespace:HoldItCore.People"
+	xmlns:HoldItCore_Levels="clr-namespace:HoldItCore.Levels"
 	mc:Ignorable="d"
 	x:Class="HoldItCore.Assets"
-	d:DesignWidth="640" d:DesignHeight="480">
+	d:DesignWidth="640" d:DesignHeight="480" Width="800">
 	<UserControl.Resources>
 
 		<Style x:Key="SpeechBubbleStyle1" TargetType="local:SpeechBubble">
@@ -165,14 +166,110 @@
 			</Setter>
 			<Setter Property="FontSize" Value="32"/>
 		</Style>
+		<Style x:Key="EasyStyle1" TargetType="HoldItCore_Levels:Easy">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="HoldItCore_Levels:Easy">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="PlayStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0" To="Intro">
+											<Storyboard>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IntroText">
+													<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+												<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="IntroText">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+													<DiscreteObjectKeyFrame KeyTime="0:0:1">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Collapsed</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+										<VisualTransition GeneratedDuration="0" To="Lost">
+											<Storyboard>
+												<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="LostText">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+													<DiscreteObjectKeyFrame KeyTime="0:0:1">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Collapsed</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LostText">
+													<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+										<VisualTransition GeneratedDuration="0" To="Completed">
+											<Storyboard>
+												<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CompletedText">
+													<DiscreteObjectKeyFrame KeyTime="0">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Visible</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+													<DiscreteObjectKeyFrame KeyTime="0:0:1">
+														<DiscreteObjectKeyFrame.Value>
+															<Visibility>Collapsed</Visibility>
+														</DiscreteObjectKeyFrame.Value>
+													</DiscreteObjectKeyFrame>
+												</ObjectAnimationUsingKeyFrames>
+												<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CompletedText">
+													<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+													<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+												</DoubleAnimationUsingKeyFrames>
+											</Storyboard>
+										</VisualTransition>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Intro"/>
+									<VisualState x:Name="Playing"/>
+									<VisualState x:Name="Lost"/>
+									<VisualState x:Name="Completed"/>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<ContentPresenter/>
+							<Grid>
+								<TextBlock x:Name="IntroText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ready. Set. Go." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+								<TextBlock x:Name="LostText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="They all peed their pants." VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+								<TextBlock x:Name="CompletedText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Level Completed!" VerticalAlignment="Center" FontSize="64" Visibility="Collapsed"/>
+							</Grid>
+							<Grid>
+								<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+									<TextBlock Text="Score: " FontSize="32" />
+									<TextBlock x:Name="Score" Text="{Binding Score}" FontSize="32"/>
+								</StackPanel>
+								<local:ScoreAlert Width="100" Alert="{TemplateBinding ScoreIncrement}" Description="{TemplateBinding ScoreReason}"/>
+							</Grid>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+								<TextBlock Text="Accidents: " FontSize="32"/>
+								<TextBlock x:Name="Accidents" Text="{Binding Accidents}" FontSize="32"/>
+							</StackPanel>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="White">
-		<local:Urinal HorizontalAlignment="Right" d:LayoutOverrides="Width, Height" Margin="0,33,47,0" VerticalAlignment="Top"/>
-		<HoldItCore_People:OldMan HorizontalAlignment="Left" VerticalAlignment="Bottom" d:LayoutOverrides="Width, Height" Margin="8,0,0,61"/>
 		<HoldItCore_People:Person VerticalAlignment="Bottom" d:LayoutOverrides="Height" Margin="227,0,288,35" Style="{StaticResource SpeechPerson}" SpeechText="I need to pee!"/>
-		<local:SpeechBubble Content="This is a long piece of text." Margin="0,141,427,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="24"/>
-		<local:ScoreAlert Alert="500" VerticalAlignment="Top" Style="{StaticResource ScoreAlertStyle1}" Margin="253,153,264,0" Description="Good Job!" d:LayoutOverrides="Width"/>
-		<local:ScoreAlert Alert="Foo" HorizontalAlignment="Right" Margin="0,0,52,157" VerticalAlignment="Bottom"/>
+		<HoldItCore_Levels:Easy Style="{StaticResource EasyStyle1}"/>
 	</Grid>
 </UserControl>

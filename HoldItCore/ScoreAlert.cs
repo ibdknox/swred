@@ -13,11 +13,24 @@ namespace HoldItCore {
 
 			VisualStateGroup alertStates = (VisualStateGroup)this.GetTemplateChild("AlertStates");
 			alertStates.CurrentStateChanged += this.HandleAlertStateChanged;
+
+			double value = 0;
+			if (this.Alert is int)
+				value = (int)this.Alert;
+			else if (this.Alert is double)
+				value = (double)this.Alert;
+
+			if (value > 0)
+				VisualStateManager.GoToState(this, "Plus", true);
+			else
+				VisualStateManager.GoToState(this, "Minus", true);
+
+			VisualStateManager.GoToState(this, "Float", true);
 		}
 
 		private void HandleAlertStateChanged(object sender, VisualStateChangedEventArgs e) {
 			if (e.NewState.Name == "Float")
-				VisualStateManager.GoToState(this, "Steady", true);
+				((Panel)this.Parent).Children.Remove(this);
 		}
 
 		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ScoreAlert), new PropertyMetadata(default(string)));
@@ -25,8 +38,6 @@ namespace HoldItCore {
 			get { return (string)this.GetValue(ScoreAlert.DescriptionProperty); }
 			set { this.SetValue(ScoreAlert.DescriptionProperty, value); }
 		}
-
-
 
 		public static readonly DependencyProperty AlertProperty = DependencyProperty.Register("Alert", typeof(object), typeof(ScoreAlert), new PropertyMetadata(default(string), ScoreAlert.HandleAlertChanged));
 		public object Alert {
@@ -39,19 +50,20 @@ namespace HoldItCore {
 		}
 
 		protected virtual void OnAlertChanged(DependencyPropertyChangedEventArgs e) {
-			double value = 0;
-			if (this.Alert is int)
-				value = (int)this.Alert;
-			else if (this.Alert is double)
-				value = (double)this.Alert;
+			//double value = 0;
+			//if (this.Alert is int)
+			//    value = (int)this.Alert;
+			//else if (this.Alert is double)
+			//    value = (double)this.Alert;
 
-			if (value > 0)
-				VisualStateManager.GoToState(this, "Plus", true);
-			else
-				VisualStateManager.GoToState(this, "Minus", true);
+			//if (value > 0)
+			//    VisualStateManager.GoToState(this, "Plus", true);
+			//else
+			//    VisualStateManager.GoToState(this, "Minus", true);
 			
-			VisualStateManager.GoToState(this, "Float", true);
+			//VisualStateManager.GoToState(this, "Float", true);
 		}
+
 
 		
 
