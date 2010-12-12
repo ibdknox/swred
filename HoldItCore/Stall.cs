@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Diagnostics;
 using HoldItCore.People;
+using System.Collections.Generic;
 
 namespace HoldItCore {
 
@@ -30,6 +31,14 @@ namespace HoldItCore {
 
 		public void PersonLeft() {
 			this.Person = null;
+		}
+
+		public int OccupiedNeighborCount {
+			get { return this.Level.GetNeighborCount(this); }
+		}
+
+		public IEnumerable<Stall> Neighbors {
+			get { return this.Level.GetNeighbors(this); }
 		}
 
 		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
