@@ -75,10 +75,13 @@
       <DependentUpon>IntroLevel.xaml</DependentUpon>
     </Compile>
     <Compile Include="People\Nerves.cs" />
+    <Compile Include="People\Normal.cs" />
     <Compile Include="People\OldMan.cs" />
     <Compile Include="People\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Randomizer.cs" />
     <Compile Include="ScoreAlert.cs" />
+    <Compile Include="SettingsStore.cs" />
     <Compile Include="Sounds\ISoundPlayer.cs" />
     <Compile Include="Sounds\SoundManager.cs" />
     <Compile Include="Sounds\SoundIndex.cs" />
@@ -163,6 +166,21 @@
     <Resource Include="People\Nervous Pee-er Glow.png" />
     <Resource Include="People\Old Man Front Glow.png" />
     <Resource Include="People\Phone Guy Front Glow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sounds\flush.wav" />
+    <EmbeddedResource Include="Sounds\background.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="People\Drunk behind No BG.png" />
+    <Resource Include="People\Drunk Front No BG.png" />
+    <Resource Include="People\Kid behind No BG.png" />
+    <Resource Include="People\Kid Front Glow.png" />
+    <Resource Include="People\Kid Front No BG.png" />
+    <Resource Include="People\matre d behind No BG.png" />
+    <Resource Include="People\matre d No BG.png" />
+    <Resource Include="People\Phone Guy Behind No BG.png" />
+    <Resource Include="People\Phone Guy No BG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -31,6 +31,12 @@ namespace HoldItCore.People {
 		private Storyboard bladderFillAnimation = new Storyboard();
 		private Storyboard bladderEmptyAnimation = new Storyboard();
 
+		protected Randomizer waitingMessages = new Randomizer();
+		protected Randomizer headingToStallMessages = new Randomizer();
+		protected Randomizer enteredStallMessages = new Randomizer();
+		protected Randomizer bladderEmptyMessages = new Randomizer();
+		protected Randomizer peedMessages = new Randomizer();
+
 		public Person() {
 			this.DefaultStyleKey = typeof(Person);
 
@@ -103,6 +109,12 @@ namespace HoldItCore.People {
 
 				this.State = PersonState.InLine;
 			}
+
+			this.OnWait();
+		}
+
+		protected virtual void OnWait() {
+			this.waitingMessages.DoSomething();
 		}
 
 		public virtual bool CanUseStall(Stall stall) {
@@ -126,6 +138,12 @@ namespace HoldItCore.People {
 			sb.Completed += this.HandleGoToStallAnimationCompleted;
 
 			VisualStateManager.GoToState(this, "Backwards", true);
+
+			this.OnHeadingToStall();
+		}
+
+		protected virtual void OnHeadingToStall() {
+			this.headingToStallMessages.DoSomething();
 		}
 
 		private void HandleGoToStallAnimationCompleted(object sender, EventArgs e) {
@@ -144,6 +162,10 @@ namespace HoldItCore.People {
 
 		private void HandleBladderFillAnimationCompleted(object sender, EventArgs e) {
 
+			this.OnPeedPants();
+		}
+
+		protected virtual void OnPeedPants() {
 			VisualStateManager.GoToState(this, "PeedPants", true);
 
 			this.Level.AccidentHappened();
@@ -164,19 +186,21 @@ namespace HoldItCore.People {
 			exitingAnimation.Completed += this.HandleExitCompleted;
 
 			VisualStateManager.GoToState(this, "Forwards", true);
+
+			this.peedMessages.DoSomething();
 		}
 
 		private double MaxPeeAmount { get; set; }
 
 		protected void StartPeeing() {
-            var stopSound = SoundManager.Play(SoundIndex.peeing, false);
+            var stopSound = SoundManager.Play(SoundIndex.peeing, SettingsStore.EffectsVolume, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
 			this.bladderFillAnimation.Stop();
 			this.peeScaleTransform.ScaleX = scale;
 			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
 			this.bladderEmptyAnimation.Completed += (s, e) => {
-				stopSound();
+				SoundManager.Stop(stopSound);
 				this.HandleBladderEmptyAnimationCompleted(); 
 			};
 		}
@@ -188,8 +212,14 @@ namespace HoldItCore.People {
 		}
 
 		private void HandleBladderEmptyAnimationCompleted() {
+			this.OnBladderEmpty();
+		}
+
+		protected virtual void OnBladderEmpty() {
 			if (this.stall != null)
 				this.LeaveStall();
+
+			this.bladderEmptyMessages.DoSomething();
 		}
 
 		private Storyboard AnimatePeeTo(double percent, double rate, double delay = 0) {
@@ -227,6 +257,8 @@ namespace HoldItCore.People {
 			foreach (Stall stall in this.stall.Neighbors)
 				if (stall.Person != null)
 					stall.Person.OnNeighborEnteredStall();
+
+			this.enteredStallMessages.DoSomething();
 		}
 
 		protected virtual void OnNeighborEnteredStall() {
@@ -319,6 +351,11 @@ namespace HoldItCore.People {
 				VisualStateManager.GoToState(this, "Selected", true);
 			else
 				VisualStateManager.GoToState(this, "Deselected", true);
+		}
+
+		public void Say(string text) {
+			this.SpeechText = "";
+			this.SpeechText = text;
 		}
 
 		public static readonly DependencyProperty SpeechTextProperty = DependencyProperty.Register("SpeechText", typeof(string), typeof(Person), new PropertyMetadata(default(string), Person.HandleSpeechTextChanged));

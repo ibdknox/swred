@@ -13,6 +13,7 @@ using Microsoft.Phone.Controls;
 using HoldItCore.Sounds;
 using HoldItCore;
 using System.Collections.ObjectModel;
+using System.Windows.Navigation;
 
 namespace HoldIt
 {
@@ -28,9 +29,6 @@ namespace HoldIt
 			this.DataContext = this;
 
             SoundManager.InitSoundSource(new XNASoundPlayer());
-
-			foreach(LevelInfo level in LevelInfo.AllLevels)
-				this.Levels.Add(level);
 
 
 
@@ -50,6 +48,10 @@ namespace HoldIt
 		private void HandleShowSettings(object sender, EventArgs e) {
 			this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
 		}
+        private void HandleShowHelp(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Help.xaml", UriKind.Relative));
+        }
 
 		private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e) {
 			if (e.AddedItems.Count == 1) {
@@ -60,6 +62,15 @@ namespace HoldIt
 						this.NavigationService.Navigate(new Uri("/Levels.xaml?Level="+ levelInfo.Title, UriKind.Relative));
 				}
 			}
+		}
+
+		protected override void OnNavigatedTo(NavigationEventArgs e) {
+			base.OnNavigatedTo(e);
+
+			this.Levels.Clear();
+
+			foreach (LevelInfo level in LevelInfo.AllLevels)
+				this.Levels.Add(level);
 		}
     }
 }

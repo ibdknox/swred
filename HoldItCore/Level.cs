@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using HoldItCore.People;
 using System.Net;
+using HoldItCore.Sounds;
 
 namespace HoldItCore {
 
@@ -37,6 +38,7 @@ namespace HoldItCore {
 		public Level() {
 			this.DefaultStyleKey = typeof(Level);
 			this.DataContext = this;
+			SoundManager.Play(SoundIndex.background, SettingsStore.MusicVolume, true);
 		}
 
 		public event EventHandler Completed;
@@ -174,6 +176,7 @@ namespace HoldItCore {
 		}
 
 		public virtual void Stop() {
+			SoundManager.StopAll();
 		}
 
 		private Person selection = null;
