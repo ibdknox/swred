@@ -16,13 +16,6 @@ namespace HoldIt
 {
 	public partial class Settings : PhoneApplicationPage
 	{
-
-        static Settings()
-        {
-            SettingsStore.MusicVolume = 80;
-            SettingsStore.EffectsVolume = 65;
-        }
-
 		public Settings()
 		{
 			InitializeComponent();
