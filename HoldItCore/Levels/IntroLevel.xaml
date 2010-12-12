@@ -15,14 +15,14 @@
 
 	</local:Level.Resources>
     
-    <Canvas x:Name="LayoutRoot" Background="White">
-    	<Canvas x:Name="Urinals" Height="170" Canvas.Left="35" Canvas.Top="122" Width="641">
-    		<local:Urinal Height="170" />
-    		<local:Urinal Height="170" Canvas.Left="387" />
-    		<local:Urinal Height="170" Width="125" Canvas.Left="258" />
-    		<local:Urinal Height="170" Canvas.Left="129" />
-    		<local:Urinal Height="170" Canvas.Left="516" />
-    	</Canvas>
-    	<Canvas x:Name="People"/>
-    </Canvas>
+    <Grid x:Name="LayoutRoot" Background="White">
+		<StackPanel x:Name="Urinals" Orientation="Horizontal" Margin="0,122,0,188" d:LayoutOverrides="Width" HorizontalAlignment="Center">
+			<local:Urinal Margin="10,0" />
+			<local:Urinal Margin="10,0" />
+			<local:Urinal Margin="10,0" />
+			<local:Urinal Margin="10,0" />
+			<local:Urinal Margin="10,0" />
+		</StackPanel>
+		<Canvas x:Name="People" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+	</Grid>
 </local:Level>
