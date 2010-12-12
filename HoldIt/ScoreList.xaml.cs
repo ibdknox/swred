@@ -26,26 +26,40 @@ namespace HoldIt
 		delegate void DownloadComplete(string content);
 		delegate void DownloadFailed(Exception e);
 
-		class TextBoxWithScore : TextBox
+        List<VisualScoreInfo> highScoreList = new List<VisualScoreInfo>();
+        List<VisualScoreInfo> myScoreList = new List<VisualScoreInfo>();
+
+		abstract class VisualScoreInfo
 		{
-			protected TextBoxWithScore(ScoreData score) { this.Score = score; }
+            protected VisualScoreInfo(ScoreData score, int sortValue) { this.Score = score; this.SortValue = sortValue; }
 			public ScoreData Score { get; private set; }
+            public int SortValue { get; private set; }
+            abstract public UIElement ToVisual();
+
 		}
 
-		class LevelScoreTextBox : TextBoxWithScore
+        class LevelScoreTextBox : VisualScoreInfo
 		{
-			public LevelScoreTextBox(ScoreData score) : base(score)
-			{
-				this.Text = string.Format("'{0}': #{0} - {1} points", score.Level, score.Rank, score.Score);
-			}
+            public LevelScoreTextBox(ScoreData score)
+                : base(score, score.LevelIndex)
+            { }
+
+            public override UIElement ToVisual()
+            {
+                return new TextBlock() { Text = string.Format("'{0}': ranked #{1} - {2} points", Score.Level, Score.Rank, Score.Score) };
+            }
 		}
 
-		class HighScoreTextBox : TextBoxWithScore
+        class HighScoreTextBox : VisualScoreInfo
 		{
-			public HighScoreTextBox(ScoreData score) : base(score)
-			{
-				this.Text = string.Format("#{0} - {1}, {2} points", score.Rank, score.Player, score.Score);
-			}
+            public HighScoreTextBox(ScoreData score)
+                : base(score, -score.Rank)
+            { }
+
+            public override UIElement ToVisual()
+            {
+                return new TextBlock() { Text = string.Format("#{0} - {1}, {2} points", Score.Rank, Score.Player, Score.Score) };
+            } 
 		}
 
 		[DataContract]
@@ -73,13 +87,32 @@ namespace HoldIt
 				var level = Level.LevelNames[i];
 
 				Dictionary<string, string> parameters = new Dictionary<string, string>();
-				parameters.Add("player", "noah");
+				parameters.Add("name", "noah");
 				parameters.Add("level", level);
 
 				DownloadAsync("/getrank", parameters,
-					onComplete: output => InsertHighScore(ParseOutputIntoScore(output, i, level)),
+					onComplete: output => InsertMyScore(ParseOutputIntoScore(output, i, level)),
 					onError: error => Debug.WriteLine(error.ToString()));
 			}
+
+            // Kick off downloads for high scores
+            //for (int i = 0; i < Level.LevelNames.Count; i++)
+            {
+                var level = "Intro";
+            
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("level", level);
+            
+                DownloadAsync("/listscores", parameters,
+                    onComplete: output => 
+                        {
+                            foreach (var score in ParseOutputIntoScores(output, 0, level))
+                            {
+                                InsertHighScore(score);
+                            }
+                        },
+                    onError: error => Debug.WriteLine(error.ToString()));
+            }
 		}
 
 		ScoreData ParseOutputIntoScore(string output, int levelIndex, string level)
@@ -88,6 +121,7 @@ namespace HoldIt
 			using( MemoryStream ms = new MemoryStream( Encoding.Unicode.GetBytes( output ) ) )
 			{
 			    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ScoreData));
+
 				score = (ScoreData)serializer.ReadObject(ms);
 			}
 
@@ -96,29 +130,50 @@ namespace HoldIt
 			return score;
 		}
 
-		void InsertScore(TextBoxWithScore boxWithScore, UIElementCollection list)
+        IEnumerable<ScoreData> ParseOutputIntoScores(string output, int levelIndex, string level)
+        {
+            using (MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(output)))
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ScoreData[]));
+
+                while (ms.Position < ms.Length)
+                {
+                    ScoreData[] scores = (ScoreData[])serializer.ReadObject(ms);
+
+                    foreach (var score in scores)
+                    {
+                        score.LevelIndex = levelIndex;
+                        yield return score;
+                    }
+                }
+            }
+        }
+
+        void InsertScore(VisualScoreInfo boxWithScore, List<VisualScoreInfo> scores, UIElementCollection list)
 		{
-			for (int i = 0; i < list.Count; i++)
+			for (int i = 0; i < scores.Count; i++)
 			{
-				var item = list[i] as LevelScoreTextBox;
-				if (boxWithScore.Score.LevelIndex > boxWithScore.Score.LevelIndex)
+				var item = scores[i];
+				if (boxWithScore.SortValue > item.SortValue)
 				{
-					list.Insert(i, boxWithScore);
+					list.Insert(i, boxWithScore.ToVisual());
+                    scores.Insert(i, boxWithScore);
 					return;
 				}
 			}
 			// If we hit this point, it goes at the end
-			list.Add(boxWithScore);
+			list.Add(boxWithScore.ToVisual());
+            scores.Add(boxWithScore);
 		}
 
 		void InsertHighScore(ScoreData score)
 		{
-			InsertScore(new HighScoreTextBox(score), this.HighScoreList.Children);
+			InsertScore(new HighScoreTextBox(score), this.highScoreList, this.HighScoreList.Children);
 		}
 
 		void InsertMyScore(ScoreData score)
 		{
-			InsertScore(new LevelScoreTextBox(score), this.MyScoreList.Children);
+			InsertScore(new LevelScoreTextBox(score), this.myScoreList, this.MyScoreList.Children);
 		}
 
 		void DownloadAsync(string page, Dictionary<string, string> parameters, DownloadComplete onComplete, DownloadFailed onError)

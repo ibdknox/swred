@@ -10,7 +10,7 @@
 		FontFamily="{StaticResource PhoneFontFamilyNormal}"
 		FontSize="{StaticResource PhoneFontSizeNormal}"
 		Foreground="{StaticResource PhoneForegroundBrush}"
-		SupportedOrientations="Portrait" Orientation="Landscape"
+		SupportedOrientations="Portrait" Orientation="Portrait"
 		shell:SystemTray.IsVisible="True">
 
 	<!--LayoutRoot is the root grid where all page content is placed-->
@@ -30,6 +30,7 @@
 		<StackPanel x:Name="ContentPanel" Orientation="Horizontal" Grid.Row="1" Margin="12,0,12,0">
 			<Button x:Name="PlayButton" Content="Play" VerticalAlignment="Bottom" Margin="0,0,8,8"/>
 			<Button x:Name="Scores" Content="High Scores" VerticalAlignment="Bottom" Margin="0,0,8,8"/>
+			<Button x:Name="Settings" Content="Settings" VerticalAlignment="Bottom" Margin="0,0,8,8" />
 		</StackPanel>
 	</Grid>
 
