@@ -185,7 +185,7 @@
 								<Border x:Name="border" BorderThickness="1" Background="{TemplateBinding Background}" CornerRadius="20,20,0,0" Width="50" Margin="0,29,0,0"/>
 								<Ellipse x:Name="ellipse1" Fill="{TemplateBinding Background}" Width="40" VerticalAlignment="Top" Height="40" Margin="5,0"/>
 							</Grid>
-							<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="50">
+						<Grid x:Name="PeeMeter" VerticalAlignment="Top" Height="17" Width="{TemplateBinding PeeMeterSize}" HorizontalAlignment="Left" Margin="38,0,0,0">
 								<Rectangle Fill="#F4454545" Stroke="Black"/>
 								<Rectangle x:Name="PeeProgress" Fill="#FFFFF500" RenderTransformOrigin="0,0.5"/>
 								<Rectangle Stroke="Black"/>
@@ -207,6 +207,11 @@
 
 	<Style TargetType="peeps:OldMan" BasedOn="{StaticResource PersonBase}">
 		<Setter Property="Background" Value="#FFB4B4B4"/>
+		<Setter Property="PeeMeterSize" Value="30"/>
+	</Style>
+
+	<Style TargetType="peeps:Nerves" BasedOn="{StaticResource PersonBase}">
+		<Setter Property="Background" Value="Green"/>
 	</Style>
 
 	<Style TargetType="local:Stall">
@@ -302,4 +307,5 @@
 		</Setter>
 		<Setter Property="FontSize" Value="32"/>
 	</Style>
+	
 </ResourceDictionary>

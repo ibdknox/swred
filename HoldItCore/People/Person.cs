@@ -20,7 +20,7 @@ namespace HoldItCore.People {
 		Exiting,
 	}
 
-	public class Person : Control {
+	public class Person : ContentControl {
 
 		private Point lineStart = new Point(35, 350);
 		private Point exitPoint = new Point(-100, 500);
@@ -101,8 +101,10 @@ namespace HoldItCore.People {
 
 				this.State = PersonState.InLine;
 			}
+		}
 
-			
+		public virtual bool CanUseStall(Stall stall) {
+			return true;
 		}
 
 		public void GoToStall(Stall stall) {
@@ -160,7 +162,9 @@ namespace HoldItCore.People {
 
 		private double MaxPeeAmount { get; set; }
 
-		private void StartPeeing() {
+		
+
+		protected void StartPeeing() {
             SoundManager.Play(SoundIndex.peeing, false);
 			this.MaxPeeAmount = this.CurrentBladderFill;
 			double scale = this.CurrentBladderFill;
@@ -168,6 +172,12 @@ namespace HoldItCore.People {
 			this.peeScaleTransform.ScaleX = scale;
 			this.bladderEmptyAnimation = this.AnimatePeeTo(0, this.PeeRate);
 			this.bladderEmptyAnimation.Completed += this.HandleBladderEmptyAnimationCompleted;
+		}
+
+		protected void StopPeeing() {
+			double scale = this.CurrentBladderFill;
+			this.bladderEmptyAnimation.Stop();
+			this.peeScaleTransform.ScaleX = scale;
 		}
 
 		private void HandleBladderEmptyAnimationCompleted(object sender, EventArgs e) {
@@ -205,6 +215,16 @@ namespace HoldItCore.People {
 
 			this.stall.PersonEntered();
 			this.StartPeeing();
+
+			foreach (Stall stall in this.stall.Neighbors)
+				if (stall.Person != null)
+					stall.Person.OnNeighborEnteredStall();
+		}
+
+		protected virtual void OnNeighborEnteredStall() {
+		}
+
+		protected virtual void OnNeighborLeftStall() {
 		}
 
 		protected virtual void LeaveStall() {
@@ -213,6 +233,10 @@ namespace HoldItCore.People {
 			Storyboard sb = this.AnimateTo(this.exitPoint);
 			this.stall.PersonLeft();
 			sb.Completed += this.HandleExitCompleted;
+
+			foreach (Stall stall in this.stall.Neighbors)
+				if (stall.Person != null)
+					stall.Person.OnNeighborLeftStall();
 		}
 
 		private void HandleExitCompleted(object sender, EventArgs e) {
@@ -305,5 +329,15 @@ namespace HoldItCore.People {
 			if (e.NewState.Name == "Visible")
 				VisualStateManager.GoToState(this, "Hidden", true);
 		}
+
+
+
+		public static readonly DependencyProperty PeeMeterSizeProperty = DependencyProperty.Register("PeeMeterSize", typeof(double), typeof(Person), new PropertyMetadata(50d));
+		public double PeeMeterSize {
+			get { return (double)this.GetValue(Person.PeeMeterSizeProperty); }
+			set { this.SetValue(Person.PeeMeterSizeProperty, value); }
+		}
+
+		
 	}
 }

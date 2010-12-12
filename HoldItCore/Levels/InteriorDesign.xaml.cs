@@ -24,7 +24,7 @@ namespace HoldItCore.Levels {
 
 			this.timer.Start();
 
-			this.AddPerson(new Person());
+			this.Spawn();
 		}
 
 		protected override void Stop() {
@@ -34,11 +34,15 @@ namespace HoldItCore.Levels {
 		}
 
 		private void HandleTick(object sender, EventArgs e) {
+			this.Spawn();
+		}
+
+		private void Spawn() {
 			double val = rng.NextDouble();
 			if (val <= .5)
-				this.AddPerson(new OldMan());
+				this.AddPerson(new Nerves());
 			else
-				this.AddPerson(new Person());
+				this.AddPerson(new OldMan());
 		}
 	}
 }
