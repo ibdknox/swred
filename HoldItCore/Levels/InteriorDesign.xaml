@@ -34,11 +34,11 @@
     <Grid x:Name="LayoutRoot" Background="White">
 		<Image Source="WoodHex.png" Stretch="Fill"/>
 		<StackPanel x:Name="Urinals" Orientation="Horizontal" d:LayoutOverrides="Width, Height" Margin="0,70,0,0" VerticalAlignment="Top">
-			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
-			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
-			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
-			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
-			<local:Urinal Style="{StaticResource UrinalStyle1}" Margin="-31,0,0,0" />
+			<local:Urinal Margin="-31,0,0,0" />
+			<local:Urinal Margin="-31,0,0,0" />
+			<local:Urinal Margin="-31,0,0,0" />
+			<local:Urinal Margin="-31,0,0,0" />
+			<local:Urinal Margin="-31,0,0,0" />
 		</StackPanel>
 		<Canvas x:Name="People" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 	</Grid>

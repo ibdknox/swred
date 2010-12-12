@@ -24,7 +24,7 @@
 		<shell:ApplicationBar IsMenuEnabled="False">
 			<shell:ApplicationBarIconButton IconUri="/icons/appbar.feature.settings.rest.png" Text="Settings" Click="HandleShowSettings"/>
 			<shell:ApplicationBarIconButton IconUri="/icons/appbar.favs.rest.png" Text="Scores" Click="HandleShowScores"/>
-			<shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="help"/>
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="help" Click="HandleShowHelp"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 

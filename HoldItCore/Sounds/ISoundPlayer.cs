@@ -2,5 +2,5 @@
 
 public interface ISoundPlayer
 {
-    Action Play(String soundfile, bool loop);
+    Action Play(String soundfile, int volume, bool loop);
 }
