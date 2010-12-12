@@ -15,9 +15,33 @@ namespace HoldIt
 {
 	public partial class Settings : PhoneApplicationPage
 	{
+        public static int MusicVolume { get; private set; }
+        public static int EffectsVolume { get; private set; }
+
+        static Settings()
+        {
+            MusicVolume = 80;
+            EffectsVolume = 65;
+        }
+
 		public Settings()
 		{
 			InitializeComponent();
+
+            this.MusicVolumeSlider.ValueChanged += (sender, args) =>
+                {
+                    MusicVolume = (int)args.NewValue;
+                    MusicVolumeLabel.Text = ((int)args.NewValue).ToString();
+                };
+
+            this.EffectsVolumeSlider.ValueChanged += (sender, args) =>
+                {
+                    EffectsVolume = (int)args.NewValue;
+                    EffectsVolumeLabel.Text = ((int)args.NewValue).ToString();
+                };
+
+            MusicVolumeSlider.Value = MusicVolume;
+            EffectsVolumeSlider.Value = EffectsVolume;
 		}
 	}
 }

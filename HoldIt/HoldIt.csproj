@@ -64,6 +64,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HighScoreList.xaml.cs">
+      <DependentUpon>HighScoreList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Levels.xaml.cs">
       <DependentUpon>Levels.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,7 @@
     <Compile Include="ScoreList.xaml.cs">
       <DependentUpon>ScoreList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScoreUtil.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -84,6 +88,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="HighScoreList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Levels.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

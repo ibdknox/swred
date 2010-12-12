@@ -39,12 +39,12 @@
 			</Grid.RowDefinitions>
 			
 			<TextBlock Text="Music: " Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="32"/>
-			<Slider x:Name="MusicVolume" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Value="75" Minimum="0" Maximum="100" Margin="0,32,0,0" />
-			<TextBlock Text="{Binding ElementName=MusicVolume, Path=Value}" Grid.Row="0" Grid.Column="2" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" />
+			<Slider x:Name="MusicVolumeSlider" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Value="75" Minimum="0" Maximum="100" Margin="0,32,0,0" />
+			<TextBlock x:Name="MusicVolumeLabel" Text="80" Grid.Row="0" Grid.Column="2" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
 			<TextBlock Text="Effects: " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="32"/>
-			<Slider x:Name="EffectsVolume" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Value="62" Minimum="0" Maximum="100" Margin="0,32,0,0" />
-			<TextBlock Text="{Binding ElementName=EffectsVolume, Path=Value}" Grid.Row="1" Grid.Column="2" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" />
+			<Slider x:Name="EffectsVolumeSlider" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Value="62" Minimum="0" Maximum="100" Margin="0,32,0,0" />
+			<TextBlock x:Name="EffectsVolumeLabel" Text="65" Grid.Row="1" Grid.Column="2" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
 
 		</Grid>
