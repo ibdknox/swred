@@ -33,7 +33,7 @@
     
     <Grid x:Name="LayoutRoot" Background="White">
 		<Image Source="WoodHex.png" Stretch="Fill"/>
-		<StackPanel x:Name="Urinals" Orientation="Horizontal" d:LayoutOverrides="Width, Height" Margin="0,70,0,0" VerticalAlignment="Top">
+		<StackPanel x:Name="Urinals" Orientation="Horizontal" Margin="0,70,0,0" VerticalAlignment="Top">
 			<local:Urinal Margin="-31,0,0,0" />
 			<local:Urinal Margin="-31,0,0,0" />
 			<local:Urinal Margin="-31,0,0,0" />

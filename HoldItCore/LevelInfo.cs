@@ -18,19 +18,19 @@ namespace HoldItCore {
 			LevelInfo.AllLevels.Add(new LevelInfo() {
 				LevelType = typeof(InteriorDesign),
 				Title = "Interior Design",
-				Description = "Classy!",
+				Description = "The exposed brick is soooo hip",
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
+				LevelType = typeof(SuperBowl),
 				Title = "Super Bowls",
 				Description = "Welcome to the big leagues",
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
+				LevelType = typeof(Urination),
 				Title = "Urine Nation",
-				Description = "",
+				Description = "Everyone on earth goes to the John, right now",
 			});
 		}
 

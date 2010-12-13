@@ -17,7 +17,7 @@ namespace HoldItCore.Levels {
 	public partial class Easy : Level {
 
 		DispatcherTimer timer = new DispatcherTimer() {
-			Interval = TimeSpan.FromSeconds(1.5),
+			Interval = TimeSpan.FromSeconds(3),
 		};
 
 		public Easy() {

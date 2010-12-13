@@ -12,9 +12,9 @@
     
     <Canvas x:Name="LayoutRoot" Background="White">
     	<Canvas x:Name="Urinals" Height="170" Canvas.Left="66" Canvas.Top="122" Width="641">
-    		<local:Urinal Height="170" />
-    		<local:Urinal Height="170" Width="125" Canvas.Left="516" />
-    		<local:Urinal Height="170" Canvas.Left="259" />
+    		<local:Urinal Height="Auto" />
+    		<local:Urinal Height="Auto" Width="125" Canvas.Left="516" />
+    		<local:Urinal Height="Auto" Canvas.Left="259" />
     	</Canvas>
     	<Canvas x:Name="People"/>
     </Canvas>
