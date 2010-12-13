@@ -18,7 +18,7 @@ namespace HoldItCore {
 			LevelInfo.AllLevels.Add(new LevelInfo() {
 				LevelType = typeof(InteriorDesign),
 				Title = "Interior Design",
-				Description = "Classy!",
+				Description = "The exposed brick is soooo hip",
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
@@ -30,7 +30,7 @@ namespace HoldItCore {
 			LevelInfo.AllLevels.Add(new LevelInfo() {
 				LevelType = typeof(Urination),
 				Title = "Urine Nation",
-				Description = "",
+				Description = "Everyone on earth goes to the John, right now",
 			});
 		}
 
