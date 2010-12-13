@@ -22,13 +22,13 @@ namespace HoldItCore {
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
+				LevelType = typeof(InteriorDesign),
 				Title = "Super Bowls",
 				Description = "Welcome to the big leagues",
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
+				LevelType = typeof(Urination),
 				Title = "Urine Nation",
 				Description = "",
 			});

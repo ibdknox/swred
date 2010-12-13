@@ -65,6 +65,9 @@
       <DependentUpon>LevelContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="LevelInfo.cs" />
+    <Compile Include="Levels\Urination.xaml.cs">
+      <DependentUpon>Urination.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Levels\InteriorDesign.xaml.cs">
       <DependentUpon>InteriorDesign.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
     <Page Include="LevelContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Levels\Urination.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Levels\InteriorDesign.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +188,9 @@
     <Resource Include="People\matre d No BG.png" />
     <Resource Include="People\Phone Guy Behind No BG.png" />
     <Resource Include="People\Phone Guy No BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Levels\level2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
