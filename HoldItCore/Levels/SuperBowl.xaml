@@ -1,0 +1,45 @@
+﻿<local:Level
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	
+    xmlns:local="clr-namespace:HoldItCore"
+	x:Class="HoldItCore.Levels.SuperBowl"
+	
+    mc:Ignorable="d"
+    d:DesignHeight="480" d:DesignWidth="800">
+	<local:Level.Resources>
+		<Style x:Key="TroughStyle" TargetType="local:Urinal">
+			<Setter Property="Height" Value="220"/>
+			<Setter Property="Width" Value="115"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="local:Urinal">
+						<Grid Height="220" Width="198" >
+							<Rectangle Fill="#FFF4F4F5" Opacity="0.265" Stroke="Black" StrokeThickness="4"/>
+							<Canvas x:Name="AlertPanel" Height="0" Width="0" Margin="57,-25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+
+
+	</local:Level.Resources>
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+		<Image Source="WoodHex.png" Stretch="Fill"/>
+		<StackPanel x:Name="Urinals" Orientation="Horizontal" Margin="0,70,0,0" VerticalAlignment="Top">
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+			<local:Urinal Style="{StaticResource TroughStyle}" />
+		</StackPanel>
+		<Canvas x:Name="People" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+	</Grid>
+</local:Level>

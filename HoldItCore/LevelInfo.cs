@@ -22,7 +22,7 @@ namespace HoldItCore {
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
+				LevelType = typeof(SuperBowl),
 				Title = "Super Bowls",
 				Description = "Welcome to the big leagues",
 			});
