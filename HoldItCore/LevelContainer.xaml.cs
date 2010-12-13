@@ -15,18 +15,20 @@ namespace HoldItCore {
 			InitializeComponent();
 
 			this.levels.Add(new LevelInfo() {
-				LevelType = typeof(SuperBowl),
+				LevelType = typeof(InteriorDesign),
 				Title = "Interior Design",
 			});
 
-			this.levels.Add(new LevelInfo() {
-				LevelType = typeof(Easy),
-				Title = "Easy",
+			this.levels.Add(new LevelInfo()
+			{
+				LevelType = typeof(Urination),
+				Title = "Urine-Nation",
 			});
 
-			this.levels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
-				Title = "Intro",
+			this.levels.Add(new LevelInfo()
+			{
+				LevelType = typeof(SuperBowl),
+				Title = "Super Bowl!",
 			});
 
 			this.NextLevel();

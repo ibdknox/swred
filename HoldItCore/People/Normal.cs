@@ -12,10 +12,6 @@ namespace HoldItCore.People {
 				this.Say("It's crazy in here.");
 			});
 
-			this.waitingMessages.Add(.1, delegate {
-				this.Say("Get off my lawn.");
-			});
-
 			this.headingToStallMessages.Add(.3, delegate {
 				this.Say("'Scuze me.");
 			});
