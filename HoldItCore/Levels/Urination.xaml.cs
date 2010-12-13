@@ -6,18 +6,18 @@ using HoldItCore.People;
 using System.Windows.Controls;
 
 namespace HoldItCore.Levels {
-	public partial class SuperBowl : Level {
+	public partial class Urination : Level {
 
 		DispatcherTimer timer = new DispatcherTimer() {
-			Interval = TimeSpan.FromSeconds(1),
+			Interval = TimeSpan.FromSeconds(3),
 		};
 
 		private Random rng = new Random();
 
-		public SuperBowl() {
+		public Urination() {
 			InitializeComponent();
 
-			this.Remaining = 50;
+			this.Remaining = 25;
 
 			this.timer.Tick += this.HandleTick;
 		}
@@ -42,18 +42,12 @@ namespace HoldItCore.Levels {
 
 		private void Spawn() {
 			double val = rng.NextDouble();
-			Person person;
-			if (val <= .05)
-				person = new Nerves();
-			else if (val < .3)
-				person = new OldMan();
+			if (val <= .2)
+				this.AddPerson(new Nerves());
+			else if (val < .5)
+				this.AddPerson(new OldMan());
 			else
-				person = new Normal();
-
-			person.WalkSpeed = person.WalkSpeed * 2;
-			person.PeeRate = person.PeeRate * 2;
-
-			this.AddPerson(person);
+				this.AddPerson(new Normal());
 		}
 	}
 }

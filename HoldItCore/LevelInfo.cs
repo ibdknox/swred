@@ -28,7 +28,7 @@ namespace HoldItCore {
 			});
 
 			LevelInfo.AllLevels.Add(new LevelInfo() {
-				LevelType = typeof(IntroLevel),
+				LevelType = typeof(Urination),
 				Title = "Urine Nation",
 				Description = "Everyone on earth goes to the John, right now",
 			});

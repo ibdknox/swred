@@ -17,7 +17,7 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="local:Urinal">
 						<Grid Height="220" Width="198" >
-							<Rectangle Fill="#FFF4F4F5" Opacity="0.265" Stroke="Black" StrokeThickness="4"/>
+							<Rectangle Fill="#FFF4F4F5" Opacity="0" Stroke="Black" StrokeThickness="4"/>
 							<Canvas x:Name="AlertPanel" Height="0" Width="0" Margin="57,-25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 						</Grid>
 					</ControlTemplate>
@@ -30,7 +30,8 @@
 	</local:Level.Resources>
     
     <Grid x:Name="LayoutRoot" Background="White">
-		<Image Source="WoodHex.png" Stretch="Fill"/>
+		<Image Source="SuperBowl.png" Stretch="Fill"/>
+		<Image Source="Trough.png" Stretch="Fill" Margin="-17,119,-12,202"/>
 		<StackPanel x:Name="Urinals" Orientation="Horizontal" Margin="0,70,0,0" VerticalAlignment="Top">
 			<local:Urinal Style="{StaticResource TroughStyle}" />
 			<local:Urinal Style="{StaticResource TroughStyle}" />

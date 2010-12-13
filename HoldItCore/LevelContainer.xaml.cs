@@ -15,7 +15,7 @@ namespace HoldItCore {
 			InitializeComponent();
 
 			this.levels.Add(new LevelInfo() {
-				LevelType = typeof(InteriorDesign),
+				LevelType = typeof(SuperBowl),
 				Title = "Interior Design",
 			});
 
